@@ -1,0 +1,25 @@
+{
+    "name": "zoonman/linkedin-client",
+    "description": "Client for LinkedIn API v2",
+    "type": "library",
+    "require": {
+        "php": ">=5.6",
+        "ext-curl": "*",
+        "guzzlehttp/guzzle": "^6.3"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Philipp Tkachev",
+            "email": "philipp@zoonman.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {"LinkedIn\\": "src/"}
+    },
+    "require-dev": {
+        "vlucas/phpdotenv": "~2.0",
+        "phpunit/phpunit": "~4.0"
+    },
+    "autoload-dev": {}
+}
