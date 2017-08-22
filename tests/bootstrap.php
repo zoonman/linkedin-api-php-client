@@ -15,7 +15,7 @@
  */
 
 $pathToDotEnvFile = dirname(__DIR__);
-if (file_exists($pathToDotEnvFile)) {
+if (file_exists($pathToDotEnvFile . '/.env')) {
     $dotenv = new Dotenv\Dotenv($pathToDotEnvFile);
     $dotenv->load();
 } elseif (empty(getenv('LINKEDIN_CLIENT_ID')) || empty(getenv('LINKEDIN_CLIENT_SECRET'))) {
