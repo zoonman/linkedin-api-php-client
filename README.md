@@ -1,5 +1,8 @@
 PHP LinkedIn Client with OAuth 2 authorization
 ==============================================
+[![Build Status](https://travis-ci.org/zoonman/linkedin-client.svg)](https://travis-ci.org/zoonman/linkedin-client) [![Code Climate](https://codeclimate.com/github/zoonman/linkedin-client/badges/gpa.svg)](https://codeclimate.com/github/zoonman/linkedin-client) [![Packagist](https://img.shields.io/packagist/dt/zoonman/linkedin-client.svg)]() [![GitHub license](https://img.shields.io/github/license/zoonman/linkedin-client.svg)]()
+
+
 
 See [complete example](examples/index.php) to get started.
 
