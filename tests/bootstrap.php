@@ -14,6 +14,10 @@
  * @link     http://www.zoonman.com/projects/linkedin-client/
  */
 
-
-$dotenv = new Dotenv\Dotenv(dirname(__DIR__));
-$dotenv->load();
+$pathToDotEnvFile = dirname(__DIR__);
+if (file_exists($pathToDotEnvFile)) {
+    $dotenv = new Dotenv\Dotenv($pathToDotEnvFile);
+    $dotenv->load();
+} elseif (empty(getenv('LINKEDIN_CLIENT_ID')) || empty(getenv('LINKEDIN_CLIENT_SECRET'))) {
+    echo "Create .env file with credentials or setup environment variables LINKEDIN_CLIENT_ID & LINKEDIN_CLIENT_SECRET to make tests pass.";
+}
