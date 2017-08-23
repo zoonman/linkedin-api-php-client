@@ -1,10 +1,10 @@
-PHP LinkedIn Client with OAuth 2 authorization
-==============================================
-[![Build Status](https://travis-ci.org/zoonman/linkedin-client.svg)](https://travis-ci.org/zoonman/linkedin-client) [![Code Climate](https://codeclimate.com/github/zoonman/linkedin-client/badges/gpa.svg)](https://codeclimate.com/github/zoonman/linkedin-client) [![Packagist](https://img.shields.io/packagist/dt/zoonman/linkedin-client.svg)]() [![GitHub license](https://img.shields.io/github/license/zoonman/linkedin-client.svg)]()
+LinkedIn API Client with OAuth 2 authorization witten on PHP
+============================================================
+[![Build Status](https://travis-ci.org/zoonman/linkedin-client.svg)](https://travis-ci.org/zoonman/linkedin-client) [![Code Climate](https://codeclimate.com/github/zoonman/linkedin-client/badges/gpa.svg)](https://codeclimate.com/github/zoonman/linkedin-client) [![Packagist](https://img.shields.io/packagist/dt/zoonman/linkedin-client.svg)](https://packagist.org/packages/zoonman/linkedin-client) [![GitHub license](https://img.shields.io/github/license/zoonman/linkedin-client.svg)](https://github.com/zoonman/linkedin-client/LICENSE.md)
 
 
 
-See [complete example](examples/index.php) to get started.
+See [complete example](examples/) inside [index.php](examples/index.php) to get started.
 
 
 ## Installation
@@ -17,16 +17,21 @@ composer require zoonman/linkedin-client
 
 Or add this package as dependency to `composer.json`.
 
+If you have never used Composer, you should start [here](http://www.phptherightway.com/#composer_and_packagist)
+and install composer.
+
 
 ## Usage
 
 To start working with LinkedIn API, you will need to 
-get client and secret go to 
-[LinkedIn Developers portal](https://developer.linkedin.com/) 
-and create new app there.
+get application client id and secret. 
+
+Go to [LinkedIn Developers portal](https://developer.linkedin.com/) 
+and create new application in section My Apps.
 
 
 #### Bootstrapping autoloader and instantiating a client
+
 
 ```php
 // ... please, add composer autoloader first
@@ -84,10 +89,50 @@ $accessToken = $client->getAccessToken($_GET['code']);
 
 #### Performing API calls 
 
-To perform api call to get profile information
+All API calls can be called through simple method:
 
 ```php
 $profile = $client->api(
+    'ENDPOINT',
+    ['parameter name' => 'its value here'],
+    'HTTP method like GET for example'
+);
+```
+
+To perform api call to get profile information
+
+```php
+$profile = $client->get(
     'people/~:(id,email-address,first-name,last-name)'
 );
+print_r($profile);
+```
+
+To list companies where you an admin
+
+```php
+$profile = $client->get(
+    'people/~:(id,email-address,first-name,last-name)'
+);
+print_r($profile);
+```
+
+To share content
+
+```php
+$share = $client->post(
+                'people/~/shares',
+                [
+                    'comment' => 'Checkout this amazing PHP SDK for LinkedIn!',
+                    'content' => [
+                        'title' => 'PHP Client for LinkedIn API',
+                        'description' => 'OAuth 2 flow, composer Package',
+                        'submitted-url' => 'https://github.com/zoonman/linkedin-api-php-client',
+                        'submitted-image-url' => 'https://github.com/fluidicon.png',
+                    ],
+                    'visibility' => [
+                        'code' => 'anyone'
+                    ]
+                ]
+            );
 ```

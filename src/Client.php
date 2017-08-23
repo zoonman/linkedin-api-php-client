@@ -20,6 +20,7 @@ use GuzzleHttp\Client as GuzzleClient;
 use GuzzleHttp\Exception\RequestException;
 use function GuzzleHttp\Psr7\build_query;
 use GuzzleHttp\Psr7\Uri;
+use LinkedIn\Http\Method;
 
 /**
  * Class Client
@@ -312,6 +313,7 @@ class Client
     }
 
     /**
+     * Perform API call to LinkedIn
      * @param string $endpoint
      * @param array  $params
      * @param string $method
@@ -319,7 +321,7 @@ class Client
      * @return array
      * @throws \LinkedIn\Exception
      */
-    public function api($endpoint, array $params = array(), $method = 'GET')
+    public function api($endpoint, array $params = array(), $method = Method::GET)
     {
         $guzzle = new GuzzleClient([
             'base_uri' => self::API_ROOT,
@@ -330,13 +332,28 @@ class Client
             ]
         ]);
         $uri = $endpoint;
+        $options = [];
         //$params['oauth2_access_token'] = $this->accessToken->getToken();
-        if (!empty($params)) {
-            $uri .= '?' . build_query($params);
+        switch ($method) {
+            case Method::GET:
+                if (!empty($params)) {
+                    $uri .= '?' . build_query($params);
+                }
+                break;
+            case Method::POST:
+                $options['body'] = \GuzzleHttp\json_encode($params);
+                break;
+            default:
+                throw new Exception(
+                    "Method not defined",
+                    1,
+                    null,
+                    "Please, pass correct method!"
+                );
         }
 
         try {
-            $response = $guzzle->request($method, $uri);
+            $response = $guzzle->request($method, $uri, $options);
         } catch (RequestException $requestException) {
             $json = self::responseToArray(
                 $requestException->getResponse()
@@ -350,5 +367,29 @@ class Client
             throw $lnException;
         }
         return self::responseToArray($response);
+    }
+
+    /**
+     * Make API call to LinkedIn using GET method
+     * @param string $endpoint
+     * @param array $params
+     *
+     * @return array
+     */
+    public function get($endpoint, array $params = array())
+    {
+        return $this->api($endpoint, $params, $method = Method::GET);
+    }
+
+    /**
+     * Make API call to LinkedIn using POST method
+     * @param string $endpoint
+     * @param array $params
+     *
+     * @return array
+     */
+    public function post($endpoint, array $params = array())
+    {
+        return $this->api($endpoint, $params, $method = Method::POST);
     }
 }

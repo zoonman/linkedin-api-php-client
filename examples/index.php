@@ -19,6 +19,7 @@ include_once dirname(__DIR__) . DIRECTORY_SEPARATOR . 'vendor/autoload.php';
 
 // import client class
 use LinkedIn\Client;
+use LinkedIn\Scope;
 
 // import environment variables from the environment file
 $dotenv = new Dotenv\Dotenv(dirname(__DIR__));
@@ -51,10 +52,27 @@ if (isset($_GET['code'])) { // we are returning back from LinkedIn with the code
             pp($accessToken); // print the access token content
             echo 'Profile:';
             // perform api call to get profile information
-            $profile = $client->api(
+            $profile = $client->get(
                 'people/~:(id,email-address,first-name,last-name)'
             );
             pp($profile); // print profile information
+
+            $share = $client->post(
+                'people/~/shares',
+                [
+                    'comment' => 'Checkout this amazing PHP SDK for LinkedIn!',
+                    'content' => [
+                        'title' => 'PHP Client for LinkedIn API',
+                        'description' => 'OAuth 2 flow, composer Package',
+                        'submitted-url' => 'https://github.com/zoonman/linkedin-api-php-client',
+                        'submitted-image-url' => 'https://github.com/fluidicon.png',
+                    ],
+                    'visibility' => [
+                        'code' => 'anyone'
+                    ]
+                ]
+            );
+            pp($share);
         } catch (\LinkedIn\Exception $exception) {
             // in case of failure, provide with details
             pp($exception);
@@ -78,13 +96,8 @@ if (isset($_GET['code'])) { // we are returning back from LinkedIn with the code
     echo '<a href="/">Start over</a>';
 } else {
     // define desired list of scopes
-    $scopes = [
-        'r_basicprofile',
-        'r_emailaddress',
-        'rw_company_admin',
-        'w_share',
-    ];
-    $loginUrl = $client->getLoginUrl(); // get url on LinkedIn to start linking
+    $scopes = Scope::getValues();
+    $loginUrl = $client->getLoginUrl($scopes); // get url on LinkedIn to start linking
     $_SESSION['state'] = $client->getState(); // save state for future validation
     $_SESSION['redirect_url'] = $client->getRedirectUrl(); // save redirect url for future validation
     echo 'LoginUrl: <a href="'.$loginUrl.'">' . $loginUrl. '</a>';
