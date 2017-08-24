@@ -30,20 +30,30 @@ class AccessToken
     protected $token;
 
     /**
+     * When token will expire.
+     *
+     * Please, pay attention that LinkedIn API always returns "expires in" time,
+     * which is amount of seconds before token will expire since now.
+     * If you are going to store token somewhere, you have to keep "expires at"
+     * or two values - "expires in" and "token created".
+     * Using "expires at" approach lets you have efficient queries to find
+     * tokens will soon expire and be proactive with regards to your
+     * B2C communication.
+     *
      * @var int
      */
-    protected $expiresIn;
+    protected $expiresAt;
 
     /**
      * AccessToken constructor.
      *
      * @param string $token
-     * @param int    $expiresIn
+     * @param int    $expiresAt
      */
-    public function __construct($token = '', $expiresIn = 0)
+    public function __construct($token = '', $expiresAt = 0)
     {
         $this->setToken($token);
-        $this->setExpiresIn($expiresIn);
+        $this->setExpiresAt($expiresAt);
     }
 
     /**
@@ -76,7 +86,7 @@ class AccessToken
      */
     public function getExpiresIn()
     {
-        return $this->expiresIn;
+        return $this->expiresAt - time();
     }
 
     /**
@@ -88,7 +98,7 @@ class AccessToken
      */
     public function setExpiresIn($expiresIn)
     {
-        $this->expiresIn = $expiresIn;
+        $this->expiresAt = $expiresIn + time();
         return $this;
     }
 
@@ -103,6 +113,27 @@ class AccessToken
     }
 
     /**
+     * @return int
+     */
+    public function getExpiresAt()
+    {
+        return $this->expiresAt;
+    }
+
+    /**
+     * @param int $expiresAt
+     *
+     * @return AccessToken
+     */
+    public function setExpiresAt($expiresAt)
+    {
+        $this->expiresAt = $expiresAt;
+        return $this;
+    }
+
+    /**
+     * Instantiate token object
+     *
      * @param $responseArray
      *
      * @return \LinkedIn\AccessToken
@@ -126,7 +157,7 @@ class AccessToken
         }
         return new static(
             $responseArray['access_token'],
-            $responseArray['expires_in']
+            $responseArray['expires_in'] + time()
         );
     }
 }

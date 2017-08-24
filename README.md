@@ -1,6 +1,6 @@
-LinkedIn API Client with OAuth 2 authorization witten on PHP
+LinkedIn API Client with OAuth 2 authorization written on PHP
 ============================================================
-[![Build Status](https://travis-ci.org/zoonman/linkedin-client.svg)](https://travis-ci.org/zoonman/linkedin-client) [![Code Climate](https://codeclimate.com/github/zoonman/linkedin-client/badges/gpa.svg)](https://codeclimate.com/github/zoonman/linkedin-client) [![Packagist](https://img.shields.io/packagist/dt/zoonman/linkedin-client.svg)](https://packagist.org/packages/zoonman/linkedin-client) [![GitHub license](https://img.shields.io/github/license/zoonman/linkedin-client.svg)](https://github.com/zoonman/linkedin-client/LICENSE.md)
+[![Build Status](https://travis-ci.org/zoonman/linkedin-client.svg)](https://travis-ci.org/zoonman/linkedin-api-php-client) [![Code Climate](https://codeclimate.com/github/zoonman/linkedin-api-php-client/badges/gpa.svg)](https://codeclimate.com/github/zoonman/linkedin-api-php-client) [![Packagist](https://img.shields.io/packagist/dt/zoonman/linkedin-api-php-client.svg)](https://packagist.org/packages/zoonman/linkedin-api-php-client) [![GitHub license](https://img.shields.io/github/license/zoonman/linkedin-api-php-client.svg)](https://github.com/zoonman/linkedin-api-php-client/LICENSE.md)
 
 
 
@@ -49,16 +49,20 @@ $client = new Client(
 
 #### Getting local redirect URL
 
-Get current redirect url use
+To start linking process you have to setup redirect url. 
+You can set your own or use current one.
+SDK provides you a `getRedirectUrl()` helper for your convenience:
 
 ```php
-$client->getRedirectUrl();
+$redirectUrl = $client->getRedirectUrl();
 ```
 
+We recommend you to have it stored during the linking session 
+because you will need to use it when you will be getting access token.
 
 #### Setting local redirect URL 
 
-To set redirect url use
+Set a custom redirect url use:
 
 ```php
 $client->setRedirectUrl('http://your.domain.tld/path/to/script/');
@@ -66,6 +70,9 @@ $client->setRedirectUrl('http://your.domain.tld/path/to/script/');
 
 #### Getting LinkedIn redirect URL 
 
+In order of performing OAUTH 2.0 flow, you should get LinkedIn login URL.
+During this procedure you have to define scope of requested permissions.
+Use `Scope` enum class to get scope names.
 To get redirect url to LinkedIn, use the following approach:
 
 ```php
@@ -76,8 +83,10 @@ $scopes = [
     'rw_company_admin',
     'w_share',
 ];
-$loginUrl = $client->getLoginUrl(); // get url on LinkedIn to start linking
+$loginUrl = $client->getLoginUrl($scopes); // get url on LinkedIn to start linking
 ```
+
+Now you can take user to LinkedIn. You can use link or rely on Location HTTP header.
 
 #### Getting Access Token 
 
@@ -99,6 +108,17 @@ $profile = $client->api(
 );
 ```
 
+There are two helper methods:
+
+```php
+// get method
+$client->get('ENDPOINT', ['param' => 'value']);
+
+//post
+$client->post('ENDPOINT', ['param' => 'value']);
+```
+
+
 To perform api call to get profile information
 
 ```php
@@ -108,31 +128,42 @@ $profile = $client->get(
 print_r($profile);
 ```
 
-To list companies where you an admin
+To list companies where you are an admin
 
 ```php
 $profile = $client->get(
-    'people/~:(id,email-address,first-name,last-name)'
+    'companies',
+    ['is-company-admin' => true]
 );
 print_r($profile);
 ```
 
-To share content
+To share content on a personal profile
 
 ```php
 $share = $client->post(
-                'people/~/shares',
-                [
-                    'comment' => 'Checkout this amazing PHP SDK for LinkedIn!',
-                    'content' => [
-                        'title' => 'PHP Client for LinkedIn API',
-                        'description' => 'OAuth 2 flow, composer Package',
-                        'submitted-url' => 'https://github.com/zoonman/linkedin-api-php-client',
-                        'submitted-image-url' => 'https://github.com/fluidicon.png',
-                    ],
-                    'visibility' => [
-                        'code' => 'anyone'
-                    ]
-                ]
-            );
+    'people/~/shares',
+    [
+        'comment' => 'Checkout this amazing PHP SDK for LinkedIn!',
+        'content' => [
+            'title' => 'PHP Client for LinkedIn API',
+            'description' => 'OAuth 2 flow, composer Package',
+            'submitted-url' => 'https://github.com/zoonman/linkedin-api-php-client',
+            'submitted-image-url' => 'https://github.com/fluidicon.png',
+        ],
+        'visibility' => [
+            'code' => 'anyone'
+        ]
+    ]
+);
 ```
+
+
+## Contributing
+
+Please, open PR with your changes linked to an GitHub issue.
+You code must follow [PSR](http://www.php-fig.org/psr/) standards and have PHPUnit tests. 
+
+## License
+
+[MIT](LICENSE.md)

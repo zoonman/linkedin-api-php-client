@@ -1,5 +1,5 @@
 {
-    "name": "zoonman/linkedin-client",
+    "name": "zoonman/linkedin-api-php-client",
     "description": "Client for LinkedIn API v2",
     "type": "library",
     "require": {
