@@ -1,6 +1,6 @@
 {
     "name": "zoonman/linkedin-api-php-client",
-    "description": "Client for LinkedIn API v2",
+    "description": "LinkedIn API PHP SDK with OAuth 2.0 & CSRF support. Can be used for social sign in or sharing on LinkedIn. Has a usage examples & documentation.",
     "type": "library",
     "require": {
         "php": ">=5.6",
