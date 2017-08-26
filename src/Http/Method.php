@@ -9,9 +9,9 @@
  * @package  Default
  * @author   Philipp Tkachev <zoonman@gmail.com>
  * @date     8/22/17 09:15
- * @license  http://linkedin-client.com/license.txt linkedin-client License
+ * @license  http://www.zoonman.com/projects/linkedin-client/license.txt linkedin-client License
  * @version  GIT: 1.0
- * @link     http://linkedin-client.com/
+ * @link     http://www.zoonman.com/projects/linkedin-client/
  */
 
 namespace LinkedIn\Http;
