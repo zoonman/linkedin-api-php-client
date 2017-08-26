@@ -378,7 +378,7 @@ class Client
      */
     public function get($endpoint, array $params = array())
     {
-        return $this->api($endpoint, $params, $method = Method::GET);
+        return $this->api($endpoint, $params, Method::GET);
     }
 
     /**
@@ -390,6 +390,6 @@ class Client
      */
     public function post($endpoint, array $params = array())
     {
-        return $this->api($endpoint, $params, $method = Method::POST);
+        return $this->api($endpoint, $params, Method::POST);
     }
 }
