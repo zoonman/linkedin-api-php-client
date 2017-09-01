@@ -1,7 +1,15 @@
 {
     "name": "zoonman/linkedin-api-php-client",
-    "description": "LinkedIn API PHP SDK with OAuth 2.0 & CSRF support. Can be used for social sign in or sharing on LinkedIn. Has a usage examples & documentation.",
+    "description": "LinkedIn API PHP SDK with OAuth 2.0 & CSRF support. Can be used for social sign in or sharing on LinkedIn. Examples. Documentation.",
     "type": "library",
+    "keywords": [
+        "linkedin", "linkedin-client", "linkedin-api", "linkedin-signin",
+        "linkedin-sdk", "linkedin-login", "linked in", "linkedin.com", "php-linkedin",
+        "oauth", "oauth2", "oauth2-client", "oauth2-authentication", "authentication",
+        "social", "rest", "api", "client", "social network", "auth", "authorization",
+        "wrapper", "integration", "platform"
+    ],
+    "homepage": "https://github.com/zoonman/linkedin-api-php-client",
     "require": {
         "php": ">=5.6",
         "ext-curl": "*",
@@ -11,15 +19,38 @@
     "authors": [
         {
             "name": "Philipp Tkachev",
-            "email": "philipp@zoonman.com"
+            "email": "philipp@zoonman.com",
+            "homepage": "http://www.zoonman.com/",
+            "role": "Developer"
+        },
+        {
+            "name": "Aleksey Salnikov",
+            "email": "me@iamsalnikov.ru",
+            "homepage": "http://iamsalnikov.ru/",
+            "role": "Developer"
         }
     ],
+    "support": {
+        "docs": "https://www.zoonman.com/projects/linkedin-client/",
+        "source": "https://github.com/zoonman/linkedin-api-php-client",
+        "issues": "https://github.com/zoonman/linkedin-api-php-client/issues",
+        "wiki": "https://github.com/zoonman/linkedin-api-php-client/wiki"
+    },
     "autoload": {
         "psr-4": {"LinkedIn\\": "src/"}
     },
     "require-dev": {
         "vlucas/phpdotenv": "~2.0",
         "phpunit/phpunit": "~4.0"
+    },
+    "archive": {
+        "exclude": [
+            "examples",
+            "tests",
+            ".env",
+            ".travis.yml",
+            "phpunit.xml"
+        ]
     },
     "autoload-dev": {}
 }
