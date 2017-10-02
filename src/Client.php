@@ -119,9 +119,13 @@ class Client
     }
 
     /**
+     * Retrieve Access Token from LinkedIn if we have code provided.
+     * If code is not provided, return current Access Token.
+     * If current access token is not set, will return null
+     *
      * @param string $code
      *
-     * @return \LinkedIn\AccessToken
+     * @return \LinkedIn\AccessToken|null
      * @throws \LinkedIn\Exception
      */
     public function getAccessToken($code = '')
