@@ -2,6 +2,12 @@
 
 First, clone repository.
 
+Install dependencies:
+
+```bash
+composer install [-d /path/to/repository/root]
+```
+
 Create `.env` file with linkedin credentials in the parent catalog (in the repository root) like this
 
 ```ini
