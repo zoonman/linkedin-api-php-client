@@ -165,6 +165,9 @@ class AccessToken implements \JsonSerializable
         );
     }
 
+    /**
+     * Specify data format for json_encode()
+     */
     public function jsonSerialize()
     {
         return [
@@ -172,6 +175,4 @@ class AccessToken implements \JsonSerializable
           'expiresAt' => $this->getExpiresAt(),
         ];
     }
-
-
 }
