@@ -112,4 +112,10 @@ class AccessTokenTest extends TestCase
         $token = new AccessToken('hello', 1);
         $this->assertEquals('hello', (string) $token);
     }
+
+    public function testJsonSerialize()
+    {
+        $token = new AccessToken('hello', 1);
+        $this->assertEquals('{"token":"hello","expiresAt":1}', json_encode($token));
+    }
 }

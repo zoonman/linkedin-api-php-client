@@ -21,7 +21,7 @@ namespace LinkedIn;
  *
  * @package LinkedIn
  */
-class AccessToken
+class AccessToken implements \JsonSerializable
 {
 
     /**
@@ -80,7 +80,7 @@ class AccessToken
     }
 
     /**
-     * Get token expiration
+     * The number of seconds remaining, from the time it was requested, before the token will expire.
      *
      * @return int seconds
      */
@@ -92,7 +92,7 @@ class AccessToken
     /**
      * Set token expiration time
      *
-     * @param int $expiresIn seconds
+     * @param int $expiresIn amount of seconds before expiration
      *
      * @return AccessToken
      */
@@ -113,6 +113,8 @@ class AccessToken
     }
 
     /**
+     * Get Unix epoch time when token will expire
+     *
      * @return int
      */
     public function getExpiresAt()
@@ -121,7 +123,9 @@ class AccessToken
     }
 
     /**
-     * @param int $expiresAt
+     * Set Unix epoch time when token will expire
+     *
+     * @param int $expiresAt seconds, unix time
      *
      * @return AccessToken
      */
@@ -132,7 +136,7 @@ class AccessToken
     }
 
     /**
-     * Instantiate token object
+     * Instantiate access token object
      *
      * @param $responseArray
      *
@@ -160,4 +164,14 @@ class AccessToken
             $responseArray['expires_in'] + time()
         );
     }
+
+    public function jsonSerialize()
+    {
+        return [
+          'token' => $this->getToken(),
+          'expiresAt' => $this->getExpiresAt(),
+        ];
+    }
+
+
 }

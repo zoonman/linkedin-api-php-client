@@ -16,9 +16,26 @@
 
 namespace LinkedIn;
 
+/**
+ * Class Exception
+ * @package LinkedIn
+ */
 class Exception extends \Exception
 {
+    /**
+     * Error's description
+     *
+     * @var string
+     */
     protected $description;
+
+    /**
+     * Exception constructor.
+     * @param string $message
+     * @param int $code
+     * @param null $previousException
+     * @param $description
+     */
     public function __construct(
         $message = "",
         $code = 0,
@@ -30,7 +47,9 @@ class Exception extends \Exception
     }
 
     /**
-     * @return mixed
+     * Get textual description that summarizes error.
+     *
+     * @return string
      */
     public function getDescription()
     {

@@ -183,7 +183,9 @@ class Client
     }
 
     /**
-     * @param string $accessToken
+     * Set AccessToken object
+     *
+     * @param AccessToken $accessToken
      *
      * @return Client
      */
