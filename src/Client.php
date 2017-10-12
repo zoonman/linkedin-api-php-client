@@ -156,7 +156,7 @@ class Client
                     $requestException->getMessage(),
                     $requestException->getCode(),
                     $requestException,
-                    $json['error_description']
+                    isset($json['message']) ? $json['message'] : null
                 );
                 throw $lnException;
             }
@@ -368,7 +368,7 @@ class Client
                 $requestException->getMessage(),
                 $requestException->getCode(),
                 $requestException,
-                $json['error_description']
+                isset($json['message']) ? $json['message'] : null
             );
             throw $lnException;
         }
