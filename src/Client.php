@@ -156,7 +156,7 @@ class Client
                     $requestException->getMessage(),
                     $requestException->getCode(),
                     $requestException,
-                    isset($json['message']) ? $json['message'] : null
+                    static::extractErrorDescription($json)
                 );
                 throw $lnException;
             }
@@ -368,11 +368,22 @@ class Client
                 $requestException->getMessage(),
                 $requestException->getCode(),
                 $requestException,
-                isset($json['message']) ? $json['message'] : null
+                static::extractErrorDescription($json)
             );
             throw $lnException;
         }
         return self::responseToArray($response);
+    }
+
+    private static function extractErrorDescription($json)
+    {
+      if (isset($json['error_description'])) {
+        return $json['error_description'];
+      } elseif (isset($json['message'])) {
+        return $json['message'];
+      } else {
+        return null;
+      }
     }
 
     /**
