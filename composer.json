@@ -28,6 +28,11 @@
             "email": "me@iamsalnikov.ru",
             "homepage": "http://iamsalnikov.ru/",
             "role": "Developer"
+        },
+        {
+            "name": "Daniel J. Post",
+            "homepage": "http://danieljpost.info/",
+            "role": "Developer"
         }
     ],
     "support": {
