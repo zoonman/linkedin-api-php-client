@@ -189,7 +189,7 @@ class Client
      *
      * @return Client
      */
-    public function setAccessToken($accessToken)
+    public function setAccessToken(AccessToken $accessToken)
     {
         $this->accessToken = $accessToken;
         return $this;
