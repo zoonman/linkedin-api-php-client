@@ -95,10 +95,16 @@ To get access token use (don't forget to set redirect url)
 ```php
 $accessToken = $client->getAccessToken($_GET['code']);
 ```
+This method returns object of `LinkedIn\AccessToken` class. 
+You can store this token in the file like this:
+```php
+file_put_contents('token.txt', json_encode($accessToken));
+```
+
 
 #### Setting Access Token
 
-You can use method `LinkedIn\Client::setAccessToken()` for setting token. You have to pass
+You can use method `setAccessToken()` for the `LinkedIn\Client` class to set token stored as string. You have to pass
 instance of `LinkedIn\AccessToken` to this method.
 
 ```php
@@ -111,8 +117,13 @@ $client = new Client(
     'LINKEDIN_APP_CLIENT_SECRET'
 );
 
-// set access token
-$accessToken = new AccessToken($token);
+// load token from the file
+$tokenString = file_get_contents('token.txt');
+$tokenData = json_decode($tokenString, true);
+// instantiate access token object from stored data
+$accessToken = new AccessToken($tokenData['token'], $tokenData['expires_at']);
+
+// set token for client
 $client->setAccessToken($accessToken);
 ```
 
