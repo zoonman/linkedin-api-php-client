@@ -98,9 +98,10 @@ $accessToken = $client->getAccessToken($_GET['code']);
 This method returns object of `LinkedIn\AccessToken` class. 
 You can store this token in the file like this:
 ```php
-file_put_contents('token.txt', json_encode($accessToken));
+file_put_contents('token.json', json_encode($accessToken));
 ```
-
+This way of storing tokens is not recommended due to security concerns and used for demonstration purpose. 
+Please, ensure that tokens are stored securely. 
 
 #### Setting Access Token
 
@@ -118,7 +119,7 @@ $client = new Client(
 );
 
 // load token from the file
-$tokenString = file_get_contents('token.txt');
+$tokenString = file_get_contents('token.json');
 $tokenData = json_decode($tokenString, true);
 // instantiate access token object from stored data
 $accessToken = new AccessToken($tokenData['token'], $tokenData['expires_at']);
