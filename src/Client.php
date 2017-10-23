@@ -185,13 +185,20 @@ class Client
     /**
      * Set AccessToken object
      *
-     * @param AccessToken $accessToken
+     * @param AccessToken|string $accessToken
      *
      * @return Client
      */
-    public function setAccessToken(AccessToken $accessToken)
+    public function setAccessToken($accessToken)
     {
-        $this->accessToken = $accessToken;
+        if (is_string($accessToken)) {
+            $accessToken = new AccessToken($accessToken);
+        }
+        if (is_object($accessToken) && $accessToken instanceof AccessToken) {
+            $this->accessToken = $accessToken;
+        } else {
+            throw new \InvalidArgumentException('$accessToken must be instance of \LinkedIn\AccessToken class');
+        }
         return $this;
     }
 
