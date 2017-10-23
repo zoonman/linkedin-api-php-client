@@ -96,6 +96,26 @@ To get access token use (don't forget to set redirect url)
 $accessToken = $client->getAccessToken($_GET['code']);
 ```
 
+#### Setting Access Token
+
+You can use method `LinkedIn\Client::setAccessToken()` for setting token. You have to pass
+instance of `LinkedIn\AccessToken` to this method.
+
+```php
+use LinkedIn\AccessToken;
+use LinkedIn\Client;
+
+// instantiate the Linkedin client
+$client = new Client(
+    'LINKEDIN_APP_CLIENT_ID',  
+    'LINKEDIN_APP_CLIENT_SECRET'
+);
+
+// set access token
+$accessToken = new AccessToken($token);
+$client->setAccessToken($accessToken);
+```
+
 #### Performing API calls 
 
 All API calls can be called through simple method:
