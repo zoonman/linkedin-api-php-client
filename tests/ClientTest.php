@@ -48,4 +48,57 @@ class ClientTest extends \PHPUnit_Framework_TestCase
         $actual = $this->client->getLoginUrl();
         $this->assertNotEmpty($actual);
     }
+
+    /**
+     * Make sure that method LinkedIn\Client::setAccessToken() works correctly
+     *
+     * @param $token
+     * @param AccessToken|null $expectedToken
+     * @param \Exception|null $expectedException
+     *
+     * @dataProvider getSetAccessTokenTestTable
+     */
+    public function testSetAccessToken($token, $expectedToken, $expectedException)
+    {
+        $client = new Client();
+
+        if ($expectedException !== null) {
+            $this->setExpectedException(get_class($expectedException), $expectedException->getMessage());
+        }
+
+        $client->setAccessToken($token);
+
+        if ($expectedToken !== null) {
+            $this->assertEquals($expectedToken->getToken(), $client->getAccessToken()->getToken());
+        }
+    }
+
+    public function getSetAccessTokenTestTable()
+    {
+        return [
+            [
+                'token' => null,
+                'expectedToken' => null,
+                'expectedException' => new \InvalidArgumentException('$accessToken must be instance of \LinkedIn\AccessToken class'),
+            ],
+
+            [
+                'token' => 'test token',
+                'expectedToken' => new AccessToken('test token'),
+                'expectedException' => null,
+            ],
+
+            [
+                'token' => new AccessToken('hello world'),
+                'expectedToken' => new AccessToken('hello world'),
+                'expectedException' => null,
+            ],
+
+            [
+                'token' => new \StdClass(),
+                'expectedToken' => null,
+                'expectedException' => new \InvalidArgumentException('$accessToken must be instance of \LinkedIn\AccessToken class'),
+            ],
+        ];
+    }
 }
