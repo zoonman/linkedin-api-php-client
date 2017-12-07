@@ -9,7 +9,8 @@
  * @package  Default
  * @author   Philipp Tkachev <philipp@zoonman.com>
  * @date     8/17/17 18:50
- * @license  http://www.zoonman.com/projects/linkedin-client/license.txt linkedin-client License
+ * @license  http://www.zoonman.com/projects/linkedin-client/license.txt
+ *           linkedin-client License
  * @version  GIT: 1.0
  * @link     http://www.zoonman.com/projects/linkedin-client/
  */
@@ -96,15 +97,17 @@ class Client
 
     /**
      * List of default headers
+     *
      * @var array
      */
     protected $defaultApiHeaders = [
         'Content-Type' => 'application/json',
-        'x-li-format' => 'json'
+        'x-li-format' => 'json',
     ];
 
     /**
      * Get list of headers
+     *
      * @return array
      */
     public function getDefaultApiHeaders()
@@ -114,6 +117,7 @@ class Client
 
     /**
      * Set list of default headers
+     *
      * @param array $defaultApiHeaders
      *
      * @return Client
@@ -126,6 +130,7 @@ class Client
 
     /**
      * Obtain API root URL
+     *
      * @return string
      */
     public function getApiRoot()
@@ -135,6 +140,7 @@ class Client
 
     /**
      * Specify API root URL
+     *
      * @param string $apiRoot
      *
      * @return Client
@@ -147,6 +153,7 @@ class Client
 
     /**
      * Get OAuth API root
+     *
      * @return string
      */
     public function getOAuthApiRoot()
@@ -156,6 +163,7 @@ class Client
 
     /**
      * Set OAuth API root
+     *
      * @param string $oAuthApiRoot
      *
      * @return Client
@@ -180,6 +188,7 @@ class Client
 
     /**
      * Get ClientId
+     *
      * @return string
      */
     public function getClientId()
@@ -189,6 +198,7 @@ class Client
 
     /**
      * Set ClientId
+     *
      * @param string $clientId
      *
      * @return Client
@@ -201,6 +211,7 @@ class Client
 
     /**
      * Get Client Secret
+     *
      * @return string
      */
     public function getClientSecret()
@@ -210,6 +221,7 @@ class Client
 
     /**
      * Set Client Secret
+     *
      * @param string $clientSecret
      *
      * @return Client
@@ -238,15 +250,15 @@ class Client
                 self::OAUTH2_RESPONSE_TYPE => $code,
                 'redirect_uri' => $this->getRedirectUrl(),
                 'client_id' => $this->getClientId(),
-                'client_secret' => $this->getClientSecret()
+                'client_secret' => $this->getClientSecret(),
             ];
             $uri = $this->buildUrl('accessToken', $params);
             $guzzle = new GuzzleClient([
-               'base_uri' => $this->getOAuthApiRoot(),
-               'headers' => [
+                'base_uri' => $this->getOAuthApiRoot(),
+                'headers' => [
                     'Content-Type' => 'application/json',
-                    'x-li-format' => 'json'
-                ]
+                    'x-li-format' => 'json',
+                ],
             ]);
             try {
                 $response = $guzzle->get($uri);
@@ -320,17 +332,19 @@ class Client
 
     /**
      * Get current URL
+     *
      * @return string
      */
     public function getCurrentUrl()
     {
-        $host = isset($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST']  : 'localhost';
-        $path = isset($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI']  : '/';
-        return $this->getCurrentScheme() .'://'. $host .  $path;
+        $host = isset($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : 'localhost';
+        $path = isset($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : '/';
+        return $this->getCurrentScheme() . '://' . $host . $path;
     }
 
     /**
      * Get unique state or specified state
+     *
      * @return string
      */
     public function getState()
@@ -348,6 +362,7 @@ class Client
 
     /**
      * Set State
+     *
      * @param string $state
      *
      * @return Client
@@ -362,19 +377,20 @@ class Client
      * Retrieve URL which will be used to send User to LinkedIn
      * for authentication
      *
-     * @param array  $scope       Permissions that your application requires
+     * @param array $scope Permissions that your application requires
      *
      * @return string
      */
-    public function getLoginUrl(array $scope = array('r_basicprofile', 'r_emailaddress'))
-    {
+    public function getLoginUrl(
+        array $scope = ['r_basicprofile', 'r_emailaddress']
+    ) {
 
         $params = [
             'response_type' => self::OAUTH2_RESPONSE_TYPE,
             'client_id' => $this->getClientId(),
             'redirect_uri' => $this->getRedirectUrl(),
             'state' => $this->getState(),
-            'scope' => implode(' ', $scope)
+            'scope' => implode(' ', $scope),
         ];
         $uri = $this->buildUrl('authorization', $params);
         return $uri;
@@ -414,7 +430,7 @@ class Client
 
     /**
      * @param string $endpoint
-     * @param array $params
+     * @param array  $params
      *
      * @return string
      */
@@ -438,6 +454,7 @@ class Client
 
     /**
      * Perform API call to LinkedIn
+     *
      * @param string $endpoint
      * @param array  $params
      * @param string $method
@@ -445,13 +462,13 @@ class Client
      * @return array
      * @throws \LinkedIn\Exception
      */
-    public function api($endpoint, array $params = array(), $method = Method::GET)
+    public function api($endpoint, array $params = [], $method = Method::GET)
     {
         $headers = $this->getDefaultApiHeaders();
         $headers['Authorization'] = 'Bearer ' . $this->accessToken->getToken();
         $guzzle = new GuzzleClient([
             'base_uri' => $this->getApiRoot(),
-            'headers' => $headers
+            'headers' => $headers,
         ]);
         $uri = $endpoint;
         $options = [];
@@ -498,35 +515,37 @@ class Client
      */
     private static function extractErrorDescription($json)
     {
-      if (isset($json['error_description'])) {
-        return $json['error_description'];
-      } elseif (isset($json['message'])) {
-        return $json['message'];
-      } else {
-        return null;
-      }
+        if (isset($json['error_description'])) {
+            return $json['error_description'];
+        } elseif (isset($json['message'])) {
+            return $json['message'];
+        } else {
+            return null;
+        }
     }
 
     /**
      * Make API call to LinkedIn using GET method
+     *
      * @param string $endpoint
-     * @param array $params
+     * @param array  $params
      *
      * @return array
      */
-    public function get($endpoint, array $params = array())
+    public function get($endpoint, array $params = [])
     {
         return $this->api($endpoint, $params, Method::GET);
     }
 
     /**
      * Make API call to LinkedIn using POST method
+     *
      * @param string $endpoint
-     * @param array $params
+     * @param array  $params
      *
      * @return array
      */
-    public function post($endpoint, array $params = array())
+    public function post($endpoint, array $params = [])
     {
         return $this->api($endpoint, $params, Method::POST);
     }
