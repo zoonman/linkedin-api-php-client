@@ -150,8 +150,9 @@ $client->get('ENDPOINT', ['param' => 'value']);
 $client->post('ENDPOINT', ['param' => 'value']);
 ```
 
+#### Examples
 
-To perform api call to get profile information
+Perform api call to get profile information
 
 ```php
 $profile = $client->get(
@@ -160,7 +161,7 @@ $profile = $client->get(
 print_r($profile);
 ```
 
-To list companies where you are an admin
+List companies where you are an admin
 
 ```php
 $profile = $client->get(
@@ -170,7 +171,7 @@ $profile = $client->get(
 print_r($profile);
 ```
 
-To share content on a personal profile
+Share content on a personal profile
 
 ```php
 $share = $client->post(
@@ -190,6 +191,46 @@ $share = $client->post(
 );
 ```
 
+Share content on a LinkedIn business page
+
+```php
+// set sandboxed company page to work with
+// you can check updates at
+// https://www.linkedin.com/company/devtestco
+$companyId = '2414183';
+
+$share = $client->post(
+    'companies/' . $companyId . '/shares',
+    [
+        'comment' => 'Checkout this amazing PHP SDK for LinkedIn!',
+        'content' => [
+            'title' => 'PHP Client for LinkedIn API',
+            'description' => 'OAuth 2 flow, composer Package',
+            'submitted-url' => 'https://github.com/zoonman/linkedin-api-php-client',
+            'submitted-image-url' => 'https://github.com/fluidicon.png',
+        ],
+        'visibility' => [
+            'code' => 'anyone'
+        ]
+    ]
+);
+```
+
+Setup custom API request headers
+
+```php
+$client->setDefaultApiHeaders([
+  'Content-Type' => 'application/json',
+  'x-li-format' => 'json',
+  'x-li-src' => 'msdk' // set a src header to "msdk" to mimic a mobile SDK
+]);
+```
+
+Change default API root
+
+```php
+$client->setApiRoot('https://api.linkedin.com/v2/');
+```
 
 ## Contributing
 

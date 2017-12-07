@@ -30,8 +30,14 @@ use LinkedIn\Http\Method;
 class Client
 {
 
+    /**
+     * Grant type
+     */
     const OAUTH2_GRANT_TYPE = 'authorization_code';
 
+    /**
+     * Response type
+     */
     const OAUTH2_RESPONSE_TYPE = 'code';
 
     /**
@@ -63,10 +69,102 @@ class Client
     protected $redirectUrl;
 
     /**
+     * Default authorization URL
      * string
      */
     const OAUTH2_API_ROOT = 'https://www.linkedin.com/oauth/v2/';
+
+    /**
+     * Default API root URL
+     * string
+     */
     const API_ROOT = 'https://api.linkedin.com/v1/';
+
+    /**
+     * API Root URL
+     *
+     * @var string
+     */
+    protected $apiRoot = self::API_ROOT;
+
+    /**
+     * OAuth API URL
+     *
+     * @var string
+     */
+    protected $oAuthApiRoot = self::OAUTH2_API_ROOT;
+
+    /**
+     * List of default headers
+     * @var array
+     */
+    protected $defaultApiHeaders = [
+        'Content-Type' => 'application/json',
+        'x-li-format' => 'json'
+    ];
+
+    /**
+     * Get list of headers
+     * @return array
+     */
+    public function getDefaultApiHeaders()
+    {
+        return $this->defaultApiHeaders;
+    }
+
+    /**
+     * Set list of default headers
+     * @param array $defaultApiHeaders
+     *
+     * @return Client
+     */
+    public function setDefaultApiHeaders($defaultApiHeaders)
+    {
+        $this->defaultApiHeaders = $defaultApiHeaders;
+        return $this;
+    }
+
+    /**
+     * Obtain API root URL
+     * @return string
+     */
+    public function getApiRoot()
+    {
+        return $this->apiRoot;
+    }
+
+    /**
+     * Specify API root URL
+     * @param string $apiRoot
+     *
+     * @return Client
+     */
+    public function setApiRoot($apiRoot)
+    {
+        $this->apiRoot = $apiRoot;
+        return $this;
+    }
+
+    /**
+     * Get OAuth API root
+     * @return string
+     */
+    public function getOAuthApiRoot()
+    {
+        return $this->oAuthApiRoot;
+    }
+
+    /**
+     * Set OAuth API root
+     * @param string $oAuthApiRoot
+     *
+     * @return Client
+     */
+    public function setOAuthApiRoot($oAuthApiRoot)
+    {
+        $this->oAuthApiRoot = $oAuthApiRoot;
+        return $this;
+    }
 
     /**
      * Client constructor.
@@ -81,6 +179,7 @@ class Client
     }
 
     /**
+     * Get ClientId
      * @return string
      */
     public function getClientId()
@@ -89,6 +188,7 @@ class Client
     }
 
     /**
+     * Set ClientId
      * @param string $clientId
      *
      * @return Client
@@ -100,6 +200,7 @@ class Client
     }
 
     /**
+     * Get Client Secret
      * @return string
      */
     public function getClientSecret()
@@ -108,6 +209,7 @@ class Client
     }
 
     /**
+     * Set Client Secret
      * @param string $clientSecret
      *
      * @return Client
@@ -140,7 +242,7 @@ class Client
             ];
             $uri = $this->buildUrl('accessToken', $params);
             $guzzle = new GuzzleClient([
-               'base_uri' => self::OAUTH2_API_ROOT,
+               'base_uri' => $this->getOAuthApiRoot(),
                'headers' => [
                     'Content-Type' => 'application/json',
                     'x-li-format' => 'json'
@@ -169,7 +271,7 @@ class Client
     }
 
     /**
-     *
+     * Convert API response into Array
      *
      * @param \Psr\Http\Message\ResponseInterface $response
      *
@@ -203,6 +305,8 @@ class Client
     }
 
     /**
+     * Retrieve current active scheme
+     *
      * @return string
      */
     protected function getCurrentScheme()
@@ -215,6 +319,7 @@ class Client
     }
 
     /**
+     * Get current URL
      * @return string
      */
     public function getCurrentUrl()
@@ -225,6 +330,7 @@ class Client
     }
 
     /**
+     * Get unique state or specified state
      * @return string
      */
     public function getState()
@@ -241,7 +347,8 @@ class Client
     }
 
     /**
-     * @param mixed $state
+     * Set State
+     * @param string $state
      *
      * @return Client
      */
@@ -252,6 +359,9 @@ class Client
     }
 
     /**
+     * Retrieve URL which will be used to send User to LinkedIn
+     * for authentication
+     *
      * @param array  $scope       Permissions that your application requires
      *
      * @return string
@@ -310,9 +420,10 @@ class Client
      */
     protected function buildUrl($endpoint, $params)
     {
-        $scheme = parse_url(self::OAUTH2_API_ROOT, PHP_URL_SCHEME);
-        $authority = parse_url(self::OAUTH2_API_ROOT, PHP_URL_HOST);
-        $path = parse_url(self::OAUTH2_API_ROOT, PHP_URL_PATH);
+        $url = $this->getOAuthApiRoot();
+        $scheme = parse_url($url, PHP_URL_SCHEME);
+        $authority = parse_url($url, PHP_URL_HOST);
+        $path = parse_url($url, PHP_URL_PATH);
         $path .= trim($endpoint, '/');
         $fragment = '';
         $uri = Uri::composeComponents(
@@ -336,13 +447,11 @@ class Client
      */
     public function api($endpoint, array $params = array(), $method = Method::GET)
     {
+        $headers = $this->getDefaultApiHeaders();
+        $headers['Authorization'] = 'Bearer ' . $this->accessToken->getToken();
         $guzzle = new GuzzleClient([
-            'base_uri' => self::API_ROOT,
-            'headers' => [
-                'Authorization' => 'Bearer ' . $this->accessToken->getToken(),
-                'Content-Type' => 'application/json',
-                'x-li-format' => 'json'
-            ]
+            'base_uri' => $this->getApiRoot(),
+            'headers' => $headers
         ]);
         $uri = $endpoint;
         $options = [];
@@ -382,6 +491,11 @@ class Client
         return self::responseToArray($response);
     }
 
+    /**
+     * @param $json
+     *
+     * @return null|string
+     */
     private static function extractErrorDescription($json)
     {
       if (isset($json['error_description'])) {
