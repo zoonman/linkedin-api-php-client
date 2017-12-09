@@ -42,11 +42,13 @@ class Client
     const OAUTH2_RESPONSE_TYPE = 'code';
 
     /**
+     * Client Id
      * @var string
      */
     protected $clientId;
 
     /**
+     * Client Secret
      * @var string
      */
     protected $clientSecret;
@@ -94,6 +96,32 @@ class Client
      * @var string
      */
     protected $oAuthApiRoot = self::OAUTH2_API_ROOT;
+
+    /**
+     * Use oauth2_access_token parameter instead of Authorization header
+     *
+     * @var bool
+     */
+    protected $useTokenParam = false;
+
+    /**
+     * @return bool
+     */
+    public function isUsingTokenParam()
+    {
+        return $this->useTokenParam;
+    }
+
+    /**
+     * @param bool $useTokenParam
+     *
+     * @return Client
+     */
+    public function setUseTokenParam($useTokenParam)
+    {
+        $this->useTokenParam = $useTokenParam;
+        return $this;
+    }
 
     /**
      * List of default headers
@@ -266,13 +294,12 @@ class Client
                 $json = self::responseToArray(
                     $requestException->getResponse()
                 );
-                $lnException = new Exception(
+                throw new Exception(
                     $requestException->getMessage(),
                     $requestException->getCode(),
                     $requestException,
                     static::extractErrorDescription($json)
                 );
-                throw $lnException;
             }
             $json = self::responseToArray($response);
             $this->setAccessToken(
@@ -291,9 +318,10 @@ class Client
      */
     protected static function responseToArray($response)
     {
-        $body = $response->getBody();
-        $content = $body->getContents();
-        return \GuzzleHttp\json_decode($content, true);
+        return \GuzzleHttp\json_decode(
+            $response->getBody()->getContents(),
+            true
+        );
     }
 
     /**
@@ -382,9 +410,8 @@ class Client
      * @return string
      */
     public function getLoginUrl(
-        array $scope = ['r_basicprofile', 'r_emailaddress']
+        array $scope = [Scope::READ_BASIC_PROFILE, Scope::READ_EMAIL_ADDRESS]
     ) {
-
         $params = [
             'response_type' => self::OAUTH2_RESPONSE_TYPE,
             'client_id' => $this->getClientId(),
@@ -465,14 +492,17 @@ class Client
     public function api($endpoint, array $params = [], $method = Method::GET)
     {
         $headers = $this->getDefaultApiHeaders();
-        $headers['Authorization'] = 'Bearer ' . $this->accessToken->getToken();
+        $uri = $endpoint;
+        $options = [];
+        if ($this->isUsingTokenParam()) {
+            $params['oauth2_access_token'] = $this->accessToken->getToken();
+        } else {
+            $headers['Authorization'] = 'Bearer ' . $this->accessToken->getToken();
+        }
         $guzzle = new GuzzleClient([
             'base_uri' => $this->getApiRoot(),
             'headers' => $headers,
         ]);
-        $uri = $endpoint;
-        $options = [];
-        //$params['oauth2_access_token'] = $this->accessToken->getToken();
         switch ($method) {
             case Method::GET:
                 if (!empty($params)) {
@@ -497,13 +527,12 @@ class Client
             $json = self::responseToArray(
                 $requestException->getResponse()
             );
-            $lnException = new Exception(
+            throw new Exception(
                 $requestException->getMessage(),
                 $requestException->getCode(),
                 $requestException,
                 static::extractErrorDescription($json)
             );
-            throw $lnException;
         }
         return self::responseToArray($response);
     }
@@ -531,6 +560,7 @@ class Client
      * @param array  $params
      *
      * @return array
+     * @throws \LinkedIn\Exception
      */
     public function get($endpoint, array $params = [])
     {
@@ -544,6 +574,7 @@ class Client
      * @param array  $params
      *
      * @return array
+     * @throws \LinkedIn\Exception
      */
     public function post($endpoint, array $params = [])
     {
