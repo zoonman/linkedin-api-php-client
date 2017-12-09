@@ -76,12 +76,14 @@ Use `Scope` enum class to get scope names.
 To get redirect url to LinkedIn, use the following approach:
 
 ```php
+use LinkedIn\Scope;
+
 // define scope
 $scopes = [
-    'r_basicprofile',
-    'r_emailaddress',
-    'rw_company_admin',
-    'w_share',
+  Scope::READ_BASIC_PROFILE, 
+  Scope::READ_EMAIL_ADDRESS,
+  Scope::MANAGE_COMPANY,
+  Scope::SHARING,
 ];
 $loginUrl = $client->getLoginUrl($scopes); // get url on LinkedIn to start linking
 ```
