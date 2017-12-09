@@ -21,10 +21,6 @@ include_once dirname(__DIR__) . DIRECTORY_SEPARATOR . 'vendor/autoload.php';
 use LinkedIn\Client;
 use LinkedIn\Scope;
 
-// import environment variables from the environment file
-$dotenv = new Dotenv\Dotenv(dirname(__DIR__));
-$dotenv->load();
-
 // we need a session to keep intermediate results
 // you can use your own session persistence management
 // client doesn't depend on it
@@ -32,8 +28,8 @@ session_start();
 
 // instantiate the Linkedin client
 $client = new Client(
-    getenv('LINKEDIN_CLIENT_ID'),
-    getenv('LINKEDIN_CLIENT_SECRET')
+'LINKEDIN_CLIENT_ID',
+'LINKEDIN_CLIENT_SECRET'
 );
 
 
