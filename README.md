@@ -122,7 +122,7 @@ $client = new Client(
 $tokenString = file_get_contents('token.json');
 $tokenData = json_decode($tokenString, true);
 // instantiate access token object from stored data
-$accessToken = new AccessToken($tokenData['token'], $tokenData['expires_at']);
+$accessToken = new AccessToken($tokenData['token'], $tokenData['expiresAt']);
 
 // set token for client
 $client->setAccessToken($accessToken);
