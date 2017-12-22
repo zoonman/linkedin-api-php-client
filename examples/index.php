@@ -79,6 +79,8 @@ if (isset($_GET['code'])) { // we are returning back from LinkedIn with the code
             );
             pp($share);
 
+            // set sandboxed company page id to work with
+            // https://www.linkedin.com/company/devtestco
             $companyId = '2414183';
 
             $companyShare = $client->post(
