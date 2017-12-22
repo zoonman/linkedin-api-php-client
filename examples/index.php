@@ -78,6 +78,26 @@ if (isset($_GET['code'])) { // we are returning back from LinkedIn with the code
                 ]
             );
             pp($share);
+
+            $companyId = '2414183';
+
+            $companyShare = $client->post(
+                'companies/' . $companyId . '/shares',
+                [
+                    'comment' => 'Checkout this amazing PHP SDK for LinkedIn!',
+                    'content' => [
+                        'title' => 'PHP Client for LinkedIn API',
+                        'description' => 'OAuth 2 flow, composer Package',
+                        'submitted-url' => 'https://github.com/zoonman/linkedin-api-php-client',
+                        'submitted-image-url' => 'https://github.com/fluidicon.png',
+                    ],
+                    'visibility' => [
+                        'code' => 'anyone'
+                    ]
+                ]
+            );
+            pp($companyShare);
+
         } catch (\LinkedIn\Exception $exception) {
             // in case of failure, provide with details
             pp($exception);
