@@ -128,7 +128,7 @@ class Client
      *
      * @var array
      */
-    protected $defaultApiHeaders = [
+    protected $apiHeaders = [
         'Content-Type' => 'application/json',
         'x-li-format' => 'json',
     ];
@@ -138,21 +138,21 @@ class Client
      *
      * @return array
      */
-    public function getDefaultApiHeaders()
+    public function getApiHeaders()
     {
-        return $this->defaultApiHeaders;
+        return $this->apiHeaders;
     }
 
     /**
      * Set list of default headers
      *
-     * @param array $defaultApiHeaders
+     * @param array $apiHeaders
      *
      * @return Client
      */
-    public function setDefaultApiHeaders($defaultApiHeaders)
+    public function setApiHeaders($apiHeaders)
     {
-        $this->defaultApiHeaders = $defaultApiHeaders;
+        $this->apiHeaders = $apiHeaders;
         return $this;
     }
 
@@ -290,20 +290,11 @@ class Client
             ]);
             try {
                 $response = $guzzle->get($uri);
-            } catch (RequestException $requestException) {
-                $json = self::responseToArray(
-                    $requestException->getResponse()
-                );
-                throw new Exception(
-                    $requestException->getMessage(),
-                    $requestException->getCode(),
-                    $requestException,
-                    static::extractErrorDescription($json)
-                );
+            } catch (RequestException $exception) {
+                throw Exception::fromRequestException($exception);
             }
-            $json = self::responseToArray($response);
             $this->setAccessToken(
-                AccessToken::fromResponseArray($json)
+                AccessToken::fromResponse($response)
             );
         }
         return $this->accessToken;
@@ -316,7 +307,7 @@ class Client
      *
      * @return array
      */
-    protected static function responseToArray($response)
+    public static function responseToArray($response)
     {
         return \GuzzleHttp\json_decode(
             $response->getBody()->getContents(),
@@ -491,7 +482,7 @@ class Client
      */
     public function api($endpoint, array $params = [], $method = Method::GET)
     {
-        $headers = $this->getDefaultApiHeaders();
+        $headers = $this->getApiHeaders();
         $uri = $endpoint;
         $options = [];
         if ($this->isUsingTokenParam()) {
@@ -524,34 +515,12 @@ class Client
         try {
             $response = $guzzle->request($method, $uri, $options);
         } catch (RequestException $requestException) {
-            $json = self::responseToArray(
-                $requestException->getResponse()
-            );
-            throw new Exception(
-                $requestException->getMessage(),
-                $requestException->getCode(),
-                $requestException,
-                static::extractErrorDescription($json)
-            );
+            throw Exception::fromRequestException($requestException);
         }
         return self::responseToArray($response);
     }
 
-    /**
-     * @param $json
-     *
-     * @return null|string
-     */
-    private static function extractErrorDescription($json)
-    {
-        if (isset($json['error_description'])) {
-            return $json['error_description'];
-        } elseif (isset($json['message'])) {
-            return $json['message'];
-        } else {
-            return null;
-        }
-    }
+
 
     /**
      * Make API call to LinkedIn using GET method

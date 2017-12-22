@@ -46,7 +46,9 @@
     },
     "require-dev": {
         "vlucas/phpdotenv": "~2.0",
-        "phpunit/phpunit": "~4.0"
+        "phpunit/phpunit": "~4.0",
+        "phpmd/phpmd": "@stable",
+        "squizlabs/php_codesniffer": "@stable"
     },
     "archive": {
         "exclude": [

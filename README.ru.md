@@ -168,6 +168,45 @@ $share = $client->post(
 );
 ```
 
+Поделиться контентом на тестовой странице компаний
+
+```php
+// Вы можете увидеть сообщение на этой странице
+// https://www.linkedin.com/company/devtestco
+$companyId = '2414183'; // идентификатор страницы
+
+$share = $client->post(
+    'companies/' . $companyId . '/shares',
+    [
+        'comment' => 'Checkout this amazing PHP SDK for LinkedIn!',
+        'content' => [
+            'title' => 'PHP Client for LinkedIn API',
+            'description' => 'OAuth 2 flow, composer Package',
+            'submitted-url' => 'https://github.com/zoonman/linkedin-api-php-client',
+            'submitted-image-url' => 'https://github.com/fluidicon.png',
+        ],
+        'visibility' => [
+            'code' => 'anyone'
+        ]
+    ]
+);
+```
+
+Установить заголовки по умолчанию
+
+```php
+$client->setApiHeaders([
+  'Content-Type' => 'application/json',
+  'x-li-format' => 'json',
+  'x-li-src' => 'msdk' // например отправить "msdk" чтобы симулировать мобильное SDK
+]);
+```
+
+Изменить корневой адрес для API вызовов
+
+```php
+$client->setApiRoot('https://api.linkedin.com/v2/');
+```
 
 ## Помощь проекту
 

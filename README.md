@@ -221,7 +221,7 @@ $share = $client->post(
 Setup custom API request headers
 
 ```php
-$client->setDefaultApiHeaders([
+$client->setApiHeaders([
   'Content-Type' => 'application/json',
   'x-li-format' => 'json',
   'x-li-src' => 'msdk' // set a src header to "msdk" to mimic a mobile SDK

@@ -136,6 +136,20 @@ class AccessToken implements \JsonSerializable
     }
 
     /**
+     * Convert API response into AccessToken
+     *
+     * @param \Psr\Http\Message\ResponseInterface $response
+     *
+     * @return self
+     */
+    public static function fromResponse($response)
+    {
+        return static::fromResponseArray(
+            Client::responseToArray($response)
+        );
+    }
+
+    /**
      * Instantiate access token object
      *
      * @param $responseArray

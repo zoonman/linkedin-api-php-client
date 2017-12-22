@@ -16,6 +16,8 @@
 
 namespace LinkedIn;
 
+use GuzzleHttp\Exception\RequestException;
+
 /**
  * Class Exception
  * @package LinkedIn
@@ -40,7 +42,7 @@ class Exception extends \Exception
         $message = "",
         $code = 0,
         $previousException = null,
-        $description
+        $description = ''
     ) {
         parent::__construct($message, $code, $previousException);
         $this->description = $description;
@@ -54,5 +56,39 @@ class Exception extends \Exception
     public function getDescription()
     {
         return $this->description;
+    }
+
+    /**
+     * @param RequestException $exception
+     *
+     * @return self
+     */
+    public static function fromRequestException($exception)
+    {
+        return new static(
+            $exception->getMessage(),
+            $exception->getCode(),
+            $exception,
+            static::extractErrorDescription($exception)
+        );
+    }
+
+    /**
+     * @param RequestException $exception
+     *
+     * @return null|string
+     */
+    private static function extractErrorDescription($exception)
+    {
+        $json = Client::responseToArray(
+            $exception->getResponse()
+        );
+        if (isset($json['error_description'])) {
+            return $json['error_description'];
+        } elseif (isset($json['message'])) {
+            return $json['message'];
+        } else {
+            return null;
+        }
     }
 }

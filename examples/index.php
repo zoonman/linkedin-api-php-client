@@ -22,6 +22,10 @@ use LinkedIn\Client;
 use LinkedIn\Scope;
 
 // import environment variables from the environment file
+// you need a .env file in the parent folder
+// read this document to learn how to create that file
+// https://github.com/zoonman/linkedin-api-php-client/blob/master/examples/README.md
+//
 $dotenv = new Dotenv\Dotenv(dirname(__DIR__));
 $dotenv->load();
 
@@ -31,6 +35,7 @@ $dotenv->load();
 session_start();
 
 // instantiate the Linkedin client
+// you can setup keys using
 $client = new Client(
     getenv('LINKEDIN_CLIENT_ID'),
     getenv('LINKEDIN_CLIENT_SECRET')
