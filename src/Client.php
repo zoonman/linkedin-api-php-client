@@ -273,14 +273,13 @@ class Client
     public function getAccessToken($code = '')
     {
         if (!empty($code)) {
-            $params = [
+            $uri = $this->buildUrl('accessToken', [
                 'grant_type' => self::OAUTH2_GRANT_TYPE,
                 self::OAUTH2_RESPONSE_TYPE => $code,
                 'redirect_uri' => $this->getRedirectUrl(),
                 'client_id' => $this->getClientId(),
                 'client_secret' => $this->getClientSecret(),
-            ];
-            $uri = $this->buildUrl('accessToken', $params);
+            ]);
             $guzzle = new GuzzleClient([
                 'base_uri' => $this->getOAuthApiRoot(),
                 'headers' => [
