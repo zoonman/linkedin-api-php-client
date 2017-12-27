@@ -482,7 +482,6 @@ class Client
     public function api($endpoint, array $params = [], $method = Method::GET)
     {
         $headers = $this->getApiHeaders();
-        $uri = $endpoint;
         $options = [];
         if ($this->isUsingTokenParam()) {
             $params['oauth2_access_token'] = $this->accessToken->getToken();
@@ -496,30 +495,22 @@ class Client
         switch ($method) {
             case Method::GET:
                 if (!empty($params)) {
-                    $uri .= '?' . build_query($params);
+                    $endpoint .= '?' . build_query($params);
                 }
                 break;
             case Method::POST:
                 $options['body'] = \GuzzleHttp\json_encode($params);
                 break;
             default:
-                throw new Exception(
-                    "Method not defined",
-                    1,
-                    null,
-                    "Please, pass correct method!"
-                );
+                throw new \InvalidArgumentException('The method is not correct');
         }
-
         try {
-            $response = $guzzle->request($method, $uri, $options);
+            $response = $guzzle->request($method, $endpoint, $options);
         } catch (RequestException $requestException) {
             throw Exception::fromRequestException($requestException);
         }
         return self::responseToArray($response);
     }
-
-
 
     /**
      * Make API call to LinkedIn using GET method
