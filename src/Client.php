@@ -481,8 +481,11 @@ class Client
      */
     public function api($endpoint, array $params = [], $method = Method::GET)
     {
-        $options = [];
         $headers = $this->getApiHeaders();
+        $options = $this->prepareOptions($params, $method);
+        if (!in_array($method, [Method::GET, Method::POST])) {
+            throw new \InvalidArgumentException('The method is not correct');
+        }
         if ($this->isUsingTokenParam()) {
             $params['oauth2_access_token'] = $this->accessToken->getToken();
         } else {
@@ -492,17 +495,8 @@ class Client
             'base_uri' => $this->getApiRoot(),
             'headers' => $headers,
         ]);
-        switch ($method) {
-            case Method::GET:
-                if (!empty($params)) {
-                    $endpoint .= '?' . build_query($params);
-                }
-                break;
-            case Method::POST:
-                $options['body'] = \GuzzleHttp\json_encode($params);
-                break;
-            default:
-                throw new \InvalidArgumentException('The method is not correct');
+        if (!empty($params) && Method::GET === $method) {
+            $endpoint .= '?' . build_query($params);
         }
         try {
             $response = $guzzle->request($method, $endpoint, $options);
@@ -538,5 +532,19 @@ class Client
     public function post($endpoint, array $params = [])
     {
         return $this->api($endpoint, $params, Method::POST);
+    }
+
+    /**
+     * @param array $params
+     * @param $method
+     * @return mixed
+     */
+    protected function prepareOptions(array $params, $method)
+    {
+        $options = [];
+        if ($method === Method::POST) {
+            $options['body'] = \GuzzleHttp\json_encode($params);
+        }
+        return $options;
     }
 }
