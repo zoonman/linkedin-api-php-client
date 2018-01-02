@@ -483,9 +483,7 @@ class Client
     {
         $headers = $this->getApiHeaders();
         $options = $this->prepareOptions($params, $method);
-        if (!in_array($method, [Method::GET, Method::POST])) {
-            throw new \InvalidArgumentException('The method is not correct');
-        }
+        $this->isMethodSupported($method);
         if ($this->isUsingTokenParam()) {
             $params['oauth2_access_token'] = $this->accessToken->getToken();
         } else {
@@ -536,7 +534,7 @@ class Client
 
     /**
      * @param array $params
-     * @param $method
+     * @param string $method
      * @return mixed
      */
     protected function prepareOptions(array $params, $method)
@@ -546,5 +544,15 @@ class Client
             $options['body'] = \GuzzleHttp\json_encode($params);
         }
         return $options;
+    }
+
+    /**
+     * @param $method
+     */
+    private function isMethodSupported($method)
+    {
+        if (!in_array($method, [Method::GET, Method::POST])) {
+            throw new \InvalidArgumentException('The method is not correct');
+        }
     }
 }
