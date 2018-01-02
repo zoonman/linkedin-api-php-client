@@ -66,4 +66,14 @@ class Method extends AbstractEnum
      *
      */
     const TRACE = 'TRACE';
+
+    /**
+     * @param $method
+     */
+    public static function isMethodSupported($method)
+    {
+        if (!in_array($method, [Method::GET, Method::POST])) {
+            throw new \InvalidArgumentException('The method is not correct');
+        }
+    }
 }
