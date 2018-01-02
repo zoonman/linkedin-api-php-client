@@ -481,8 +481,8 @@ class Client
      */
     public function api($endpoint, array $params = [], $method = Method::GET)
     {
-        $headers = $this->getApiHeaders();
         $options = [];
+        $headers = $this->getApiHeaders();
         if ($this->isUsingTokenParam()) {
             $params['oauth2_access_token'] = $this->accessToken->getToken();
         } else {
