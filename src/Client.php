@@ -273,13 +273,7 @@ class Client
     public function getAccessToken($code = '')
     {
         if (!empty($code)) {
-            $uri = $this->buildUrl('accessToken', [
-                'grant_type' => self::OAUTH2_GRANT_TYPE,
-                self::OAUTH2_RESPONSE_TYPE => $code,
-                'redirect_uri' => $this->getRedirectUrl(),
-                'client_id' => $this->getClientId(),
-                'client_secret' => $this->getClientSecret(),
-            ]);
+            $uri = $this->buildUrl('accessToken', []);
             $guzzle = new GuzzleClient([
                 'base_uri' => $this->getOAuthApiRoot(),
                 'headers' => [
@@ -288,7 +282,13 @@ class Client
                 ],
             ]);
             try {
-                $response = $guzzle->get($uri);
+                $response = $guzzle->post($uri, ['form_params' => [
+                    'grant_type' => self::OAUTH2_GRANT_TYPE,
+                    self::OAUTH2_RESPONSE_TYPE => $code,
+                    'redirect_uri' => $this->getRedirectUrl(),
+                    'client_id' => $this->getClientId(),
+                    'client_secret' => $this->getClientSecret(),
+                ]]);
             } catch (RequestException $exception) {
                 throw Exception::fromRequestException($exception);
             }
