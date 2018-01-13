@@ -86,7 +86,12 @@ if (isset($_GET['code'])) { // we are returning back from LinkedIn with the code
             $companyShare = $client->post(
                 'companies/' . $companyId . '/shares',
                 [
-                    'comment' => 'Checkout this amazing PHP SDK for LinkedIn!',
+                    'comment' =>
+                        sprintf(
+                            '%s %s just tried this amazing PHP SDK for LinkedIn!',
+                            $profile['firstName'],
+                            $profile['lastName']
+                        ),
                     'content' => [
                         'title' => 'PHP Client for LinkedIn API',
                         'description' => 'OAuth 2 flow, composer Package',
