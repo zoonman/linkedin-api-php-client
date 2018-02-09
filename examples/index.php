@@ -105,6 +105,13 @@ if (isset($_GET['code'])) { // we are returning back from LinkedIn with the code
             );
             pp($companyShare);
 
+            /*
+            // Returns {"serviceErrorCode":100,"message":"Not enough permissions to access media resource","status":403}
+            // You have to be whitelisted or so by LinkedIn
+            $filename = './demo.jpg';
+            $client->setApiRoot('https://api.linkedin.com/');
+            $mp = $client->upload($filename);
+            */
         } catch (\LinkedIn\Exception $exception) {
             // in case of failure, provide with details
             pp($exception);

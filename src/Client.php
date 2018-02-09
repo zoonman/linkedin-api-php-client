@@ -279,6 +279,7 @@ class Client
                 'headers' => [
                     'Content-Type' => 'application/json',
                     'x-li-format' => 'json',
+                    'Connection' => 'Keep-Alive'
                 ],
             ]);
             try {
@@ -530,6 +531,42 @@ class Client
     public function post($endpoint, array $params = [])
     {
         return $this->api($endpoint, $params, Method::POST);
+    }
+
+    /**
+     * @param $path
+     * @return array
+     * @throws Exception
+     */
+    public function upload($path)
+    {
+        $headers = $this->getApiHeaders();
+        unset($headers['Content-Type']);
+        //$headers = [];
+        if ($this->isUsingTokenParam()) {
+            //
+        } else {
+            $headers['Authorization'] = 'Bearer ' . $this->accessToken->getToken();
+        }
+        $guzzle = new GuzzleClient([
+            'base_uri' => $this->getApiRoot()
+        ]);
+        $options = [
+            'multipart' => [
+                [
+                    'name' => basename($path),
+                    'filename' => basename($path),
+                    'contents' => fopen($path, 'r')
+                ]
+            ],
+            'headers' => $headers,
+        ];
+        try {
+            $response = $guzzle->request(Method::POST, 'media/upload', $options);
+        } catch (RequestException $requestException) {
+            throw Exception::fromRequestException($requestException);
+        }
+        return self::responseToArray($response);
     }
 
     /**
