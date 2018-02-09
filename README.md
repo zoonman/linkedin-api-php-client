@@ -234,7 +234,7 @@ Change default API root
 $client->setApiRoot('https://api.linkedin.com/v2/');
 ```
 
-Try to upload image to LinkedIn. See [Rich Media Shares]()https://developer.linkedin.com/docs/guide/v2/shares/rich-media-shares#upload)
+Try to upload image to LinkedIn. See [Rich Media Shares](https://developer.linkedin.com/docs/guide/v2/shares/rich-media-shares#upload)
 (returns "Not enough permissions to access media resource" for me). 
 I assume you have to be LinkedIn partner or something like that.
 
