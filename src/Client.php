@@ -275,12 +275,11 @@ class Client
         if (!empty($code)) {
             $uri = $this->buildUrl('accessToken', []);
             $guzzle = new GuzzleClient([
-                'base_uri' => $this->getOAuthApiRoot(),
                 'headers' => [
                     'Content-Type' => 'application/json',
                     'x-li-format' => 'json',
                     'Connection' => 'Keep-Alive'
-                ],
+                ]
             ]);
             try {
                 $response = $guzzle->post($uri, ['form_params' => [
