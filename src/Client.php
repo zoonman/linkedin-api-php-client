@@ -533,6 +533,20 @@ class Client
     }
 
     /**
+     * Make API call to LinkedIn using DELETE method
+     *
+     * @param string $endpoint
+     * @param array  $params
+     *
+     * @return array
+     * @throws \LinkedIn\Exception
+     */
+    public function delete($endpoint, array $params = [])
+    {
+        return $this->api($endpoint, $params, Method::DELETE);
+    }
+
+    /**
      * @param $path
      * @return array
      * @throws Exception
