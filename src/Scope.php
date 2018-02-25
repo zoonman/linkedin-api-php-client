@@ -42,4 +42,8 @@ class Scope extends AbstractEnum
      * Enables ability to share content on LinkedIn
      */
     const SHARING = 'w_share';
+    /**
+     * Manage and delete your data including your profile, posts, invitations, and messages
+     */
+    const COMPLIANCE = 'w_compliance';
 }
