@@ -564,11 +564,13 @@ class Client
         $guzzle = new GuzzleClient([
             'base_uri' => $this->getApiRoot()
         ]);
+        $fileinfo = pathinfo($path);
+        $filename = str_replace('.', '_', $fileinfo['filename']) . '.' . $fileinfo['extension'];
         $options = [
             'multipart' => [
                 [
-                    'name' => basename($path),
-                    'filename' => basename($path),
+                    'name' => 'source',
+                    'filename' => $filename,
                     'contents' => fopen($path, 'r')
                 ]
             ],
