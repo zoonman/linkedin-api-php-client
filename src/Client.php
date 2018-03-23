@@ -565,7 +565,7 @@ class Client
             'base_uri' => $this->getApiRoot()
         ]);
         $fileinfo = pathinfo($path);
-        $filename = str_replace('.', '_', $fileinfo['filename']);
+        $filename = preg_replace('/\W+/', '_', $fileinfo['filename']);
         if (isset($fileinfo['extension'])) {
             $filename .= '.' . $fileinfo['extension'];
         }
