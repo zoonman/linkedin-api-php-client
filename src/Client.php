@@ -565,7 +565,10 @@ class Client
             'base_uri' => $this->getApiRoot()
         ]);
         $fileinfo = pathinfo($path);
-        $filename = str_replace('.', '_', $fileinfo['filename']) . '.' . $fileinfo['extension'];
+        $filename = str_replace('.', '_', $fileinfo['filename']);
+        if (isset($fileinfo['extension'])) {
+            $filename .= '.' . $fileinfo['extension'];
+        }
         $options = [
             'multipart' => [
                 [
