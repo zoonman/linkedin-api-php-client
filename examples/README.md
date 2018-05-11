@@ -45,3 +45,8 @@ php -S localhost:8901 -t examples
 ```
 
 Navigate to http://localhost:8901/ 
+
+If you will see error like `Class 'Dotenv\Dotenv' not found...` install DotEnv using the following command:
+```bash
+composer require vlucas/phpdotenv
+```

@@ -53,9 +53,9 @@ if (isset($_GET['code'])) { // we are returning back from LinkedIn with the code
             $client->setRedirectUrl($_SESSION['redirect_url']);
             // retrieve access token using code provided by LinkedIn
             $accessToken = $client->getAccessToken($_GET['code']);
-            echo 'Access token:';
+            h1('Access token');
             pp($accessToken); // print the access token content
-            echo 'Profile:';
+            h1('Profile');
             // perform api call to get profile information
             $profile = $client->get(
                 'people/~:(id,email-address,first-name,last-name)'
@@ -83,6 +83,11 @@ if (isset($_GET['code'])) { // we are returning back from LinkedIn with the code
             // https://www.linkedin.com/company/devtestco
             $companyId = '2414183';
 
+            h1('Company information');
+            $companyInfo = $client->get('companies/' . $companyId . ':(id,name,num-followers,description)');
+            pp($companyInfo);
+
+            h1('Sharing on company page');
             $companyShare = $client->post(
                 'companies/' . $companyId . '/shares',
                 [
@@ -104,6 +109,7 @@ if (isset($_GET['code'])) { // we are returning back from LinkedIn with the code
                 ]
             );
             pp($companyShare);
+            
 
             /*
             // Returns {"serviceErrorCode":100,"message":"Not enough permissions to access media resource","status":403}
@@ -135,7 +141,12 @@ if (isset($_GET['code'])) { // we are returning back from LinkedIn with the code
     echo '<a href="/">Start over</a>';
 } else {
     // define desired list of scopes
-    $scopes = Scope::getValues();
+    $scopes = [
+        Scope::READ_BASIC_PROFILE,
+        Scope::READ_EMAIL_ADDRESS,
+        Scope::MANAGE_COMPANY,
+        Scope::SHARING,
+    ];
     $loginUrl = $client->getLoginUrl($scopes); // get url on LinkedIn to start linking
     $_SESSION['state'] = $client->getState(); // save state for future validation
     $_SESSION['redirect_url'] = $client->getRedirectUrl(); // save redirect url for future validation
@@ -150,4 +161,13 @@ if (isset($_GET['code'])) { // we are returning back from LinkedIn with the code
 function pp($anything)
 {
     echo '<pre>' . print_r($anything, true) . '</pre>';
+}
+
+/**
+ * Add header
+ *
+ * @param string $h
+ */
+function h1($h) {
+    echo '<h1>' . $h . '</h1>';
 }
