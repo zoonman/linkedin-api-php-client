@@ -9,7 +9,9 @@ See [complete example](examples/) inside [index.php](examples/index.php) to get 
 
 ## Installation
 
-Use composer package manager
+You will need at least PHP 5.6. PHP 5.5 was deprecated more than a year ago! This is the time for upgrade.
+
+Use [composer](https://getcomposer.org/) package manager to install the lastest version of the package:
 
 ```bash
 composer require zoonman/linkedin-api-php-client
