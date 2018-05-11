@@ -44,8 +44,8 @@ use LinkedIn\Client;
 
 // instantiate the Linkedin client
 $client = new Client(
-    'LINKEDIN_APP_CLIENT_ID',  
-    'LINKEDIN_APP_CLIENT_SECRET'
+    'YOUR_LINKEDIN_APP_CLIENT_ID',
+    'YOUR_LINKEDIN_APP_CLIENT_SECRET'
 );
 ```
 
@@ -144,7 +144,7 @@ $profile = $client->api(
 );
 ```
 
-There are two helper methods:
+There are 3 helper methods:
 
 ```php
 // get method
@@ -152,11 +152,14 @@ $client->get('ENDPOINT', ['param' => 'value']);
 
 //post
 $client->post('ENDPOINT', ['param' => 'value']);
+
+// delete
+$client->delete('ENDPOINT');
 ```
 
 #### Examples
 
-Perform api call to get profile information
+##### Perform api call to get profile information
 
 ```php
 $profile = $client->get(
@@ -165,7 +168,7 @@ $profile = $client->get(
 print_r($profile);
 ```
 
-List companies where you are an admin
+##### List companies where you are an admin
 
 ```php
 $profile = $client->get(
@@ -175,7 +178,9 @@ $profile = $client->get(
 print_r($profile);
 ```
 
-Share content on a personal profile
+##### Share content on a personal profile
+
+Make sure that image URL is available from the Internet (don't use localhost in the image url).
 
 ```php
 $share = $client->post(
@@ -193,9 +198,18 @@ $share = $client->post(
         ]
     ]
 );
+print_r($share);
 ```
 
-Share content on a LinkedIn business page
+##### Get Company page profile
+
+```php
+$companyId = '123'; // use id of the company where you are an admin
+$companyInfo = $client->get('companies/' . $companyId . ':(id,name,num-followers,description)');
+print_r($companyInfo);
+```
+
+##### Share content on a LinkedIn business page
 
 ```php
 // set sandboxed company page to work with
@@ -218,9 +232,12 @@ $share = $client->post(
         ]
     ]
 );
+print_r($share);
 ```
 
-Setup custom API request headers
+##### Setup custom API request headers
+
+Change different headers sent to LinkedIn API.
 
 ```php
 $client->setApiHeaders([
@@ -231,15 +248,20 @@ $client->setApiHeaders([
 ]);
 ```
 
-Change default API root
+##### Change default API root
+
+Some private API access there.
 
 ```php
 $client->setApiRoot('https://api.linkedin.com/v2/');
 ```
 
+##### Image Upload
+
+I assume you have to be LinkedIn partner or something like that.
+
 Try to upload image to LinkedIn. See [Rich Media Shares](https://developer.linkedin.com/docs/guide/v2/shares/rich-media-shares#upload)
 (returns "Not enough permissions to access media resource" for me). 
-I assume you have to be LinkedIn partner or something like that.
 
 ```php
 $filename = '/path/to/image.jpg';
