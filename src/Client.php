@@ -314,10 +314,12 @@ class Client
                 true
             );
         }
-        elseif ($contents = $response->getHeaders()) {
-                return $contents;
+
+        if ($contents = $response->getHeaders()) {
+             return $contents;
         }
-        return array();
+
+        return [];
     }
 
     /**
