@@ -1,3 +1,14 @@
+### Attention!
+
+This a fork from the original code from [Zoonman](https://github.com/zoonman/linkedin-api-php-client), so almost all the credit for this library goes for him.
+
+I just made a single change in order to adapt the code for avoid an error pusblishing a new post, because Linkedin has migrated the api to the V2 Version.
+
+I still have to addapt some other changes (like adding new scopes for the V2 version), but I thought it would be better to publish a new package, so it can be used with composer without facing the commented error.
+
+Most of the examples from the original Readme are deprecated, and they should be fixed too.
+
+
 LinkedIn API Client with OAuth 2 authorization written on PHP
 ============================================================
 [![Build Status](https://travis-ci.org/zoonman/linkedin-api-php-client.svg?branch=master)](https://travis-ci.org/zoonman/linkedin-api-php-client) [![Code Climate](https://codeclimate.com/github/zoonman/linkedin-api-php-client/badges/gpa.svg)](https://codeclimate.com/github/zoonman/linkedin-api-php-client) [![Packagist](https://img.shields.io/packagist/dt/zoonman/linkedin-api-php-client.svg)](https://packagist.org/packages/zoonman/linkedin-api-php-client) [![GitHub license](https://img.shields.io/github/license/zoonman/linkedin-api-php-client.svg)](https://github.com/zoonman/linkedin-api-php-client/blob/master/LICENSE.md)
@@ -31,6 +42,7 @@ get application client id and secret.
 Go to [LinkedIn Developers portal](https://developer.linkedin.com/) 
 and create new application in section My Apps.
 
+All the documentation about using the api now resides in this [documentation](https://docs.microsoft.com/en-us/linkedin/marketing/index)
 
 #### Bootstrapping autoloader and instantiating a client
 
