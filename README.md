@@ -23,13 +23,17 @@ If you have never used Composer, you should start [here](http://www.phptherightw
 and install composer.
 
 
-## Usage
+## Get Started
+
+Before you will get started, play visit to [LinkedIn API Documentation](https://docs.microsoft.com/en-us/linkedin/).
+This will save you a lot of time and prevent some silly questions.
 
 To start working with LinkedIn API, you will need to 
 get application client id and secret. 
 
 Go to [LinkedIn Developers portal](https://developer.linkedin.com/) 
-and create new application in section My Apps.
+and create new application in section My Apps. 
+Save ClientId and ClientSecret, you will use them later.
 
 
 #### Bootstrapping autoloader and instantiating a client
@@ -82,7 +86,7 @@ use LinkedIn\Scope;
 
 // define scope
 $scopes = [
-  Scope::READ_BASIC_PROFILE, 
+  Scope::READ_LITE_PROFILE, 
   Scope::READ_EMAIL_ADDRESS,
   Scope::MANAGE_COMPANY,
   Scope::SHARING,
