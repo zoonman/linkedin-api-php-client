@@ -555,10 +555,7 @@ class Client
     {
         $headers = $this->getApiHeaders();
         unset($headers['Content-Type']);
-        //$headers = [];
-        if ($this->isUsingTokenParam()) {
-            //
-        } else {
+        if (!$this->isUsingTokenParam()) {
             $headers['Authorization'] = 'Bearer ' . $this->accessToken->getToken();
         }
         $guzzle = new GuzzleClient([
