@@ -27,6 +27,7 @@ class Scope extends AbstractEnum
      * Allows to read basic information about profile, such as name
      */
     const READ_BASIC_PROFILE = 'r_basicprofile';
+    
     /**
      * Request a minimum information about the user
      * Use this scope when implementing "Sign In with LI"
@@ -49,13 +50,34 @@ class Scope extends AbstractEnum
      * Enables ability to share content on LinkedIn
      */
     const SHARING = 'w_share';
+    
     /**
      * Manage and delete your data including your profile, posts, invitations, and messages
      */
     const COMPLIANCE = 'w_compliance';
     
+    /**
+     * Post, comment and like posts on behalf of an organization.
+     */
     const SHARE_AS_ORGANIZATION = 'w_organization_social';
+    
+    /**
+     * Retrieve organizations' posts, comments, and likes. 
+     */
     const READ_ORGANIZATION_SHARES = 'r_organization_social';
+    
+    /**
+     * Post, comment and like posts on behalf of an authenticated member.
+     */
     const SHARE_AS_USER = 'w_member_social';
+    
+    /**
+     * Restricted API! 
+     */
+    const READ_USER_CONTENT = 'r_member_social';
+    
+    /**
+     * Read and write access to ads.
+     */
     const ADS_MANAGEMENT = 'rw_ads';
 }
