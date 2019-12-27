@@ -40,22 +40,15 @@ class Scope extends AbstractEnum
      * Enables access to email address field
      */
     const READ_EMAIL_ADDRESS = 'r_emailaddress';
-
-    /**
-     * Enables  to manage business company, retrieve analytics
-     */
-    const MANAGE_COMPANY = 'rw_company_admin';
-
-    /**
-     * Enables ability to share content on LinkedIn
-     */
-    const SHARING = 'w_share';
-    
+  
     /**
      * Manage and delete your data including your profile, posts, invitations, and messages
      */
     const COMPLIANCE = 'w_compliance';
-    
+    /**
+     * Enables managing business company
+     */
+    const MANAGE_COMPANY = 'rw_organization_admin';
     /**
      * Post, comment and like posts on behalf of an organization.
      */
@@ -80,4 +73,8 @@ class Scope extends AbstractEnum
      * Read and write access to ads.
      */
     const ADS_MANAGEMENT = 'rw_ads';
+    const READ_ADS = 'r_ads';
+    const READ_LEADS = 'r_ads_leadgen_automation';
+    const READ_ADS_REPORTING = 'r_ads_reporting';
+    const READ_WRITE_DMP_SEGMENTS = 'rw_dmp_segments';
 }
