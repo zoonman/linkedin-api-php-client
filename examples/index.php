@@ -57,10 +57,14 @@ if (isset($_GET['code'])) { // we are returning back from LinkedIn with the code
             pp($accessToken); // print the access token content
             h1('Profile');
             // perform api call to get profile information
-            $profile = $client->get(
-                'people/~:(id,email-address,first-name,last-name)'
-            );
+            $profile = $client->get(        
+                'me',                       
+                ['fields' => 'id,firstName,lastName']
+            ); 
             pp($profile); // print profile information
+            
+            $emailInfo = $email = $client->get('emailAddress', ['q' => 'members', 'projection' => '(elements*(handle~))']);
+            pp($emailInfo);
 
             $share = $client->post(
                 'people/~/shares',
