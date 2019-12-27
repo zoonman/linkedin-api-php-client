@@ -9,7 +9,7 @@ See [complete example](examples/) inside [index.php](examples/index.php) to get 
 
 ## Installation
 
-You will need at least PHP 5.6. PHP 5.5 was deprecated more than a year ago! This is the time for upgrade.
+You will need at least PHP 7.3. We match [officially supported](https://www.php.net/supported-versions.php) versions of PHP.
 
 Use [composer](https://getcomposer.org/) package manager to install the lastest version of the package:
 
