@@ -66,18 +66,33 @@ if (isset($_GET['code'])) { // we are returning back from LinkedIn with the code
             $emailInfo = $email = $client->get('emailAddress', ['q' => 'members', 'projection' => '(elements*(handle~))']);
             pp($emailInfo);
 
-            $share = $client->post(
-                'people/~/shares',
-                [
-                    'comment' => 'Checkout this amazing PHP SDK for LinkedIn!',
-                    'content' => [
-                        'title' => 'PHP Client for LinkedIn API',
-                        'description' => 'OAuth 2 flow, composer Package',
-                        'submitted-url' => 'https://github.com/zoonman/linkedin-api-php-client',
-                        'submitted-image-url' => 'https://github.com/fluidicon.png',
+            $share = $client->post(                 
+                'ugcPosts',                         
+                [                                   
+                    'author' => 'urn:li:person:' . $profile['id'],
+                    'lifecycleState' => 'PUBLISHED',
+                    'specificContent' => [          
+                        'com.linkedin.ugc.ShareContent' => [
+                            'shareCommentary' => [
+                                'text' => 'Checkout this amazing PHP SDK for LinkedIn!'
+                            ],
+                            'shareMediaCategory' => 'ARTICLE',
+                            'media' => [
+                                [
+                                    'status' => 'READY',
+                                    'description' => [
+                                        'text' => 'OAuth 2 flow, composer Package.'
+                                    ],
+                                    'originalUrl' => 'https://github.com/zoonman/linkedin-api-php-client',
+                                    'title' => [
+                                        'text' => 'PHP Client for LinkedIn API'
+                                    ]
+                                ]
+                            ]
+                        ]
                     ],
                     'visibility' => [
-                        'code' => 'anyone'
+                        'com.linkedin.ugc.MemberNetworkVisibility' => 'CONNECTIONS'
                     ]
                 ]
             );
@@ -85,6 +100,7 @@ if (isset($_GET['code'])) { // we are returning back from LinkedIn with the code
 
             // set sandboxed company page id to work with
             // https://www.linkedin.com/company/devtestco
+            /* TODO!
             $companyId = '2414183';
 
             h1('Company information');
@@ -113,7 +129,7 @@ if (isset($_GET['code'])) { // we are returning back from LinkedIn with the code
                 ]
             );
             pp($companyShare);
-            
+            */
 
             /*
             // Returns {"serviceErrorCode":100,"message":"Not enough permissions to access media resource","status":403}
