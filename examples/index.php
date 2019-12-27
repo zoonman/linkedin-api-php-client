@@ -146,10 +146,9 @@ if (isset($_GET['code'])) { // we are returning back from LinkedIn with the code
 } else {
     // define desired list of scopes
     $scopes = [
-        Scope::READ_BASIC_PROFILE,
+        Scope::READ_LITE_PROFILE,
         Scope::READ_EMAIL_ADDRESS,
-        Scope::MANAGE_COMPANY,
-        Scope::SHARING,
+        Scope::SHARE_AS_USER,
     ];
     $loginUrl = $client->getLoginUrl($scopes); // get url on LinkedIn to start linking
     $_SESSION['state'] = $client->getState(); // save state for future validation
