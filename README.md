@@ -88,8 +88,8 @@ use LinkedIn\Scope;
 $scopes = [
   Scope::READ_LITE_PROFILE, 
   Scope::READ_EMAIL_ADDRESS,
-  Scope::MANAGE_COMPANY,
-  Scope::SHARING,
+  Scope::SHARE_AS_USER,
+  Scope::SHARE_AS_ORGANIZATION,
 ];
 $loginUrl = $client->getLoginUrl($scopes); // get url on LinkedIn to start linking
 ```
@@ -167,7 +167,8 @@ $client->delete('ENDPOINT');
 
 ```php
 $profile = $client->get(
-    'people/~:(id,email-address,first-name,last-name)'
+    'me',
+    ['fields' => 'id,firstName,lastName']
 );
 print_r($profile);
 ```
@@ -176,7 +177,7 @@ print_r($profile);
 
 ```php
 $profile = $client->get(
-    'companies',
+    'organizations',
     ['is-company-admin' => true]
 );
 print_r($profile);
@@ -187,21 +188,36 @@ print_r($profile);
 Make sure that image URL is available from the Internet (don't use localhost in the image url).
 
 ```php
-$share = $client->post(
-    'people/~/shares',
-    [
-        'comment' => 'Checkout this amazing PHP SDK for LinkedIn!',
-        'content' => [
-            'title' => 'PHP Client for LinkedIn API',
-            'description' => 'OAuth 2 flow, composer Package',
-            'submitted-url' => 'https://github.com/zoonman/linkedin-api-php-client',
-            'submitted-image-url' => 'https://github.com/fluidicon.png',
-        ],
-        'visibility' => [
-            'code' => 'anyone'
-        ]
-    ]
-);
+$share = $client->post(                 
+                'ugcPosts',                         
+                [                                   
+                    'author' => 'urn:li:person:' . $profile['id'],
+                    'lifecycleState' => 'PUBLISHED',
+                    'specificContent' => [          
+                        'com.linkedin.ugc.ShareContent' => [
+                            'shareCommentary' => [
+                                'text' => 'Checkout this amazing PHP SDK for LinkedIn!'
+                            ],
+                            'shareMediaCategory' => 'ARTICLE',
+                            'media' => [
+                                [
+                                    'status' => 'READY',
+                                    'description' => [
+                                        'text' => 'OAuth 2 flow, composer Package.'
+                                    ],
+                                    'originalUrl' => 'https://github.com/zoonman/linkedin-api-php-client',
+                                    'title' => [
+                                        'text' => 'PHP Client for LinkedIn API'
+                                    ]
+                                ]
+                            ]
+                        ]
+                    ],
+                    'visibility' => [
+                        'com.linkedin.ugc.MemberNetworkVisibility' => 'CONNECTIONS'
+                    ]
+                ]
+            );
 print_r($share);
 ```
 
@@ -209,7 +225,7 @@ print_r($share);
 
 ```php
 $companyId = '123'; // use id of the company where you are an admin
-$companyInfo = $client->get('companies/' . $companyId . ':(id,name,num-followers,description)');
+$companyInfo = $client->get('organizations/' . $companyId);
 print_r($companyInfo);
 ```
 
@@ -221,21 +237,36 @@ print_r($companyInfo);
 // https://www.linkedin.com/company/devtestco
 $companyId = '2414183';
 
-$share = $client->post(
-    'companies/' . $companyId . '/shares',
-    [
-        'comment' => 'Checkout this amazing PHP SDK for LinkedIn!',
-        'content' => [
-            'title' => 'PHP Client for LinkedIn API',
-            'description' => 'OAuth 2 flow, composer Package',
-            'submitted-url' => 'https://github.com/zoonman/linkedin-api-php-client',
-            'submitted-image-url' => 'https://github.com/fluidicon.png',
-        ],
-        'visibility' => [
-            'code' => 'anyone'
-        ]
-    ]
-);
+$share = $client->post(                 
+                'ugcPosts',                         
+                [                                   
+                    'author' => 'urn:li:organization:' . $companyId,
+                    'lifecycleState' => 'PUBLISHED',
+                    'specificContent' => [          
+                        'com.linkedin.ugc.ShareContent' => [
+                            'shareCommentary' => [
+                                'text' => 'Checkout this amazing PHP SDK for LinkedIn!'
+                            ],
+                            'shareMediaCategory' => 'ARTICLE',
+                            'media' => [
+                                [
+                                    'status' => 'READY',
+                                    'description' => [
+                                        'text' => 'OAuth 2 flow, composer Package.'
+                                    ],
+                                    'originalUrl' => 'https://github.com/zoonman/linkedin-api-php-client',
+                                    'title' => [
+                                        'text' => 'PHP Client for LinkedIn API'
+                                    ]
+                                ]
+                            ]
+                        ]
+                    ],
+                    'visibility' => [
+                        'com.linkedin.ugc.MemberNetworkVisibility' => 'PUBLIC'
+                    ]
+                ]
+            );
 print_r($share);
 ```
 
@@ -260,11 +291,11 @@ Some private API access there.
 $client->setApiRoot('https://api.linkedin.com/v2/');
 ```
 
-##### Image Upload
+##### ~Image Upload~ 
 
 I assume you have to be LinkedIn partner or something like that.
 
-Try to upload image to LinkedIn. See [Rich Media Shares](https://developer.linkedin.com/docs/guide/v2/shares/rich-media-shares#upload)
+Try to upload image to LinkedIn. See [Rich Media Shares](https://docs.microsoft.com/en-us/linkedin/marketing/integrations/community-management/shares/rich-media-shares)
 (returns "Not enough permissions to access media resource" for me). 
 
 ```php
