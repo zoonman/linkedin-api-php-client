@@ -13,9 +13,7 @@
  * @version  GIT: 1.0
  * @link     http://www.zoonman.com/projects/linkedin-client/
  */
-
 namespace LinkedIn;
-
 /**
  * Class AccessToken
  *
@@ -23,12 +21,10 @@ namespace LinkedIn;
  */
 class AccessToken implements \JsonSerializable
 {
-
     /**
      * @var string
      */
     protected $token;
-
     /**
      * When token will expire.
      *
@@ -43,36 +39,27 @@ class AccessToken implements \JsonSerializable
      * @var int
      */
     protected $expiresAt;
-
-
     /**
      * @var string
      */
-
     protected $refreshToken;
-
     /**
      * @var int
      */
-
     protected $refreshTokenExpiresAt;
-
     /**
      * Get token string
      *
      * @return string
      */
-
     public function getToken()
     {
         return $this->token;
     }
-
     public function getRefreshToken()
     {
         return $this->refreshToken;
     }
-
     /**
      * Set token string
      *
@@ -85,7 +72,6 @@ class AccessToken implements \JsonSerializable
         $this->token = $token;
         return $this;
     }
-
     /**
      * Set refresh token string
      *
@@ -98,7 +84,6 @@ class AccessToken implements \JsonSerializable
         $this->refreshToken = $refreshToken;
         return $this;
     }
-
     /**
      * The number of seconds remaining, from the time it was requested, before the token will expire.
      *
@@ -108,7 +93,6 @@ class AccessToken implements \JsonSerializable
     {
         return $this->expiresAt - time();
     }
-
     /**
      * AccessToken constructor.
      *
@@ -123,7 +107,6 @@ class AccessToken implements \JsonSerializable
         $this->setRefreshToken($refreshToken);
         $this->setRefreshTokenExpiresAt($refreshTokenExpiresAt);
     }
-
     /**
      * Set token expiration time
      *
@@ -136,7 +119,6 @@ class AccessToken implements \JsonSerializable
         $this->expiresAt = $expiresIn + time();
         return $this;
     }
-
     /**
      * Dynamically typecast token object into string
      *
@@ -146,7 +128,6 @@ class AccessToken implements \JsonSerializable
     {
         return $this->getToken();
     }
-
     /**
      * Get Unix epoch time when token will expire
      *
@@ -156,7 +137,6 @@ class AccessToken implements \JsonSerializable
     {
         return $this->expiresAt;
     }
-
     /**
      * Get Unix epoch time when refresh token will expire
      *
@@ -166,7 +146,6 @@ class AccessToken implements \JsonSerializable
     {
         return $this->refreshTokenExpiresAt;
     }
-
     /**
      * Set Unix epoch time when token will expire
      *
@@ -178,20 +157,16 @@ class AccessToken implements \JsonSerializable
     {
         $this->expiresAt = $expiresAt;
     }
-
     /**
      * Set Unix epoch time when token will expire
      *
      * @param int $refreshTokenExpiresAt seconds, unix time
      *
-
      */
     public function setRefreshTokenExpiresAt($refreshTokenExpiresAt)
     {
         $this->refreshTokenExpiresAt = $refreshTokenExpiresAt;
     }
-
-
     /**
      * Convert API response into AccessToken
      *
@@ -205,7 +180,6 @@ class AccessToken implements \JsonSerializable
             Client::responseToArray($response)
         );
     }
-
     /**
      * Instantiate access token object
      *
@@ -220,26 +194,11 @@ class AccessToken implements \JsonSerializable
                 'Argument is not array'
             );
         }
-        if (!isset($responseArray['access_token'])) {
-            throw new \InvalidArgumentException(
-                'Access token is not available'
-            );
-        }
-        if (!isset($responseArray['expires_in'])) {
-            throw new \InvalidArgumentException(
-                'Access token expiration date is not specified'
-            );
-        }
-        if (!isset($responseArray['refresh_token'])) {
-            throw new \InvalidArgumentException(
-                'Refresh token is not available'
-            );
-        }
-        if (!isset($responseArray['refresh_token_expires_in'])) {
-            throw new \InvalidArgumentException(
-                'Refresh token expiration date is not specified'
-            );
-        }
+        self::validateAccessToken($responseArray);
+        self::validateExpiresIn($responseArray);
+        self::validateRefreshToken($responseArray);
+        self::validateRefreshTokenExpiresIn($responseArray);
+
         return new static(
             $responseArray['access_token'],
             $responseArray['expires_in'] + time(),
@@ -247,17 +206,48 @@ class AccessToken implements \JsonSerializable
             $responseArray['refresh_token_expires_in'] + time()
         );
     }
-
+    private static function validateAccessToken($responseArray)
+    {
+        if (!isset($responseArray['access_token'])) {
+            throw new \InvalidArgumentException(
+                'Access token is not available'
+            );
+        }
+    }
+    private static function validateExpiresIn($responseArray)
+    {
+        if (!isset($responseArray['expires_in'])) {
+            throw new \InvalidArgumentException(
+                'Access token expiration date is not specified'
+            );
+        }
+    }
+    private static function validateRefreshToken($responseArray)
+    {
+        if (!isset($responseArray['refresh_token'])) {
+            throw new \InvalidArgumentException(
+                'Refresh token is not available'
+            );
+        }
+    }
+    private static function validateRefreshTokenExpiresIn($responseArray)
+    {
+        if (!isset($responseArray['refresh_token_expires_in'])) {
+            throw new \InvalidArgumentException(
+                'Refresh token expiration date is not specified'
+            );
+        }
+    }
     /**
      * Specify data format for json_encode()
      */
     public function jsonSerialize()
     {
         return [
-          'token' => $this->getToken(),
-          'expiresAt' => $this->getExpiresAt(),
-          'refreshToken' => $this->getRefreshToken(),
-          'refreshTokenExpiresAt' => $this->getRefreshTokenExpiresAt()
+            'token' => $this->getToken(),
+            'expiresAt' => $this->getExpiresAt(),
+            'refreshToken' => $this->getRefreshToken(),
+            'refreshTokenExpiresAt' => $this->getRefreshTokenExpiresAt()
         ];
     }
 }
