@@ -32,9 +32,15 @@ class Client
 {
 
     /**
-     * Grant type
+     * Grant type for authorization code
      */
     const OAUTH2_GRANT_TYPE = 'authorization_code';
+
+    /**
+     * Gran type for refresh token
+     */
+
+    const OAUTH2_REFRESH_TOKEN = 'refresh_token';
 
     /**
      * Response type
@@ -286,6 +292,44 @@ class Client
                     'grant_type' => self::OAUTH2_GRANT_TYPE,
                     self::OAUTH2_RESPONSE_TYPE => $code,
                     'redirect_uri' => $this->getRedirectUrl(),
+                    'client_id' => $this->getClientId(),
+                    'client_secret' => $this->getClientSecret(),
+                ]]);
+            } catch (RequestException $exception) {
+                throw Exception::fromRequestException($exception);
+            }
+            $this->setAccessToken(
+                AccessToken::fromResponse($response)
+            );
+        }
+        return $this->accessToken;
+    }
+
+    /**
+     * Retrieve Access Token from Previously stored Refresh Token
+     * If Refresh Token is not provided nor setted, will return null
+
+     *
+     * @param string $refreshToken
+     *
+     * @return \LinkedIn\AccessToken|null
+     * @throws \LinkedIn\Exception
+     */
+    public function renewTokenFromRefreshToken($refreshToken = '')
+    {
+        if (!empty($refreshToken)) {
+            $uri = $this->buildUrl('accessToken', []);
+            $guzzle = new GuzzleClient([
+                'headers' => [
+                    'Content-Type' => 'application/json',
+                    'x-li-format' => 'json',
+                    'Connection' => 'Keep-Alive'
+                ]
+            ]);
+            try {
+                $response = $guzzle->post($uri, ['form_params' => [
+                    'grant_type' => self::OAUTH2_REFRESH_TOKEN,
+                    'refresh_token' => $refreshToken,
                     'client_id' => $this->getClientId(),
                     'client_secret' => $this->getClientSecret(),
                 ]]);
@@ -555,7 +599,10 @@ class Client
     {
         $headers = $this->getApiHeaders();
         unset($headers['Content-Type']);
-        if (!$this->isUsingTokenParam()) {
+        //$headers = [];
+        if ($this->isUsingTokenParam()) {
+            //
+        } else {
             $headers['Authorization'] = 'Bearer ' . $this->accessToken->getToken();
         }
         $guzzle = new GuzzleClient([
