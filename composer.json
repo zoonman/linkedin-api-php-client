@@ -9,7 +9,7 @@
         "social", "rest", "api", "client", "social network", "auth", "authorization",
         "wrapper", "integration", "platform"
     ],
-    "homepage": "https://github.com/zoonman/linkedin-api-php-client",
+    "homepage": "https://github.com/samoritano/linkedin-api-php-client",
     "require": {
         "php": ">=7.3",
         "ext-curl": "*",
