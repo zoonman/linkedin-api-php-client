@@ -18,6 +18,12 @@
     "license": "MIT",
     "authors": [
         {
+            "name": "Samori Bokoko",
+            "email": "samori@bokokode.com",
+            "homepage": "https://bokokode.com/",
+            "role": "Developer"
+        },
+        {
             "name": "Philipp Tkachev",
             "email": "philipp@zoonman.com",
             "homepage": "http://www.zoonman.com/",
@@ -32,11 +38,6 @@
         {
             "name": "Daniel J. Post",
             "homepage": "http://danieljpost.info/",
-            "role": "Developer"
-        },
-        {
-            "name": "Samori Bokoko",
-            "homepage": "httpa://bokokode.com/",
             "role": "Developer"
         }
 
