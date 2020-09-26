@@ -1,10 +1,10 @@
 LinkedIn API Client with OAuth 2 authorization written on PHP
 ============================================================
-[![Build Status](https://travis-ci.org/zoonman/linkedin-api-php-client.svg?branch=master)](https://travis-ci.org/zoonman/linkedin-api-php-client) [![Code Climate](https://codeclimate.com/github/zoonman/linkedin-api-php-client/badges/gpa.svg)](https://codeclimate.com/github/zoonman/linkedin-api-php-client) [![Packagist](https://img.shields.io/packagist/dt/zoonman/linkedin-api-php-client.svg)](https://packagist.org/packages/zoonman/linkedin-api-php-client) [![GitHub license](https://img.shields.io/github/license/zoonman/linkedin-api-php-client.svg)](https://github.com/zoonman/linkedin-api-php-client/blob/master/LICENSE.md)
+[![Build Status](https://travis-ci.org/samoritano/linkedin-api-php-client.svg?branch=master)](https://travis-ci.org/samoritano/linkedin-api-php-client) [![Code Climate](https://codeclimate.com/github/samoritano/linkedin-api-php-client/badges/gpa.svg)](https://codeclimate.com/github/samoritano/linkedin-api-php-client) [![Packagist](https://img.shields.io/packagist/dt/samoritano/linkedin-api-php-client.svg)](https://packagist.org/packages/samoritano/linkedin-api-php-client) [![GitHub license](https://img.shields.io/github/license/samoritano/linkedin-api-php-client.svg)](https://github.com/samoritano/linkedin-api-php-client/blob/master/LICENSE.md)
 
 
 
-See [complete example](examples/) inside [index.php](examples/index.php) to get started.
+See [complete example](examples/) inside [index.php](examples/index.php) to get started. --> OBSOLETE (This part needs an update)
 
 
 ## Installation
@@ -14,7 +14,7 @@ You will need at least PHP 7.3. We match [officially supported](https://www.php.
 Use [composer](https://getcomposer.org/) package manager to install the lastest version of the package:
 
 ```bash
-composer require zoonman/linkedin-api-php-client
+composer require samoritano/linkedin-api-php-client-v2
 ```
 
 Or add this package as dependency to `composer.json`.
@@ -31,7 +31,7 @@ This will save you a lot of time and prevent some silly questions.
 To start working with LinkedIn API, you will need to 
 get application client id and secret. 
 
-Go to [LinkedIn Developers portal](https://developer.linkedin.com/) 
+Go to [LinkedIn Developers portal](https://www.linkedin.com/developers/) 
 and create new application in section My Apps. 
 Save ClientId and ClientSecret, you will use them later.
 
@@ -177,13 +177,13 @@ print_r($profile);
 
 ```php
 $profile = $client->get(
-    'organizations',
-    ['is-company-admin' => true]
+    'organizationalEntityAcls',
+    ['q' => 'roleAssignee']
 );
 print_r($profile);
 ```
 
-##### Share content on a personal profile
+##### Share content on a personal profile --> OBSOLETE (This part needs an update)
 
 Make sure that image URL is available from the Internet (don't use localhost in the image url).
 
@@ -205,7 +205,7 @@ $share = $client->post(
                                     'description' => [
                                         'text' => 'OAuth 2 flow, composer Package.'
                                     ],
-                                    'originalUrl' => 'https://github.com/zoonman/linkedin-api-php-client',
+                                    'originalUrl' => 'https://github.com/samoritano/linkedin-api-php-client',
                                     'title' => [
                                         'text' => 'PHP Client for LinkedIn API'
                                     ]
@@ -229,7 +229,7 @@ $companyInfo = $client->get('organizations/' . $companyId);
 print_r($companyInfo);
 ```
 
-##### Share content on a LinkedIn business page
+##### Share content on a LinkedIn business page --> OBSOLETE (This part needs an update)
 
 ```php
 // set sandboxed company page to work with
@@ -254,7 +254,7 @@ $share = $client->post(
                                     'description' => [
                                         'text' => 'OAuth 2 flow, composer Package.'
                                     ],
-                                    'originalUrl' => 'https://github.com/zoonman/linkedin-api-php-client',
+                                    'originalUrl' => 'https://github.com/samoritano/linkedin-api-php-client',
                                     'title' => [
                                         'text' => 'PHP Client for LinkedIn API'
                                     ]
@@ -291,12 +291,12 @@ Some private API access there.
 $client->setApiRoot('https://api.linkedin.com/v2/');
 ```
 
-##### ~Image Upload~ 
+##### ~Image Upload~ --> OBSOLETE (This part needs an update)
 
 I assume you have to be LinkedIn partner or something like that.
 
 Try to upload image to LinkedIn. See [Rich Media Shares](https://docs.microsoft.com/en-us/linkedin/marketing/integrations/community-management/shares/rich-media-shares)
-(returns "Not enough permissions to access media resource" for me). 
+ 
 
 ```php
 $filename = '/path/to/image.jpg';
