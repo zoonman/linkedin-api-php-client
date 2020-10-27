@@ -9,7 +9,7 @@ use Pricat\Entities\Manufacturer;
 class BagManufacturers
 {
     /**
-     * @var $arr Manufacturer[]
+     * @var $arr []
      */
     private $bag;
 
@@ -20,15 +20,33 @@ class BagManufacturers
 
     public function add(Manufacturer $manufacturer)
     {
-        array_push($this->bag, $manufacturer);
+        $this->bag[$manufacturer->getName()] = $manufacturer;
     }
 
     /**
-     * @return Manufacturer[]
+     * @return array
      */
     public function getItems()
     {
         return $this->bag;
     }
 
+    /**
+     * @param string $name
+     * @return int
+     */
+    public function getIdManufacturer($name)
+    {
+        if (!array_key_exists($name, $this->bag)) {
+            return -1;
+        }
+        /* @var $item Manufacturer */
+        $item = $this->bag[$name];
+        return $item->getId();
+    }
+
+    public function existsManufacturer($name)
+    {
+        return array_key_exists($name, $this->bag);
+    }
 }
