@@ -10,6 +10,7 @@ ini_set('log_errors', '1');
 $_SERVER['REQUEST_METHOD'] = 'POST';
 
 define('PS_ROOT', realpath(__DIR__ . '/../..'));
+define('PRICAT_ROOT', realpath(__DIR__));
 
 require_once 'vendor/autoload.php';
 
@@ -21,7 +22,7 @@ require PS_ROOT . '/images.inc.php';
 require __DIR__ . "/config/globals.php";
 
 
-if (isset($_GET['s']) and $_GET['s'] == 'jfdisuf9234tgjv0sdg34gtdfh') {
+if (isset($_GET['s']) && $_GET['s'] == 'jfdisuf9234tgjv0sdg34gtdfh') {
     define('USERMODE', true);
     ini_set('max_execution_time', 8000000);
 } elseif (PHP_SAPI != 'cli') {
