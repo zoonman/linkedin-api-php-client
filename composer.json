@@ -1,0 +1,9 @@
+{
+    "name": "root/pricat",
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "Pricat\\": ""
+        }
+    }
+}

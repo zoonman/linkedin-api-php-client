@@ -12,6 +12,7 @@ $_SERVER['REQUEST_METHOD'] = 'POST';
 define('PS_ROOT', realpath(__DIR__ . '/../..'));
 define('LOG_FILE', PS_ROOT . '/integraciones/Pricat/logs/GestionCSV_new_' . date('YmdHis') . '.log');
 
+require_once 'vendor/autoload.php';
 
 require PS_ROOT . '/config/config.inc.php';
 require PS_ROOT . '/init.php';
