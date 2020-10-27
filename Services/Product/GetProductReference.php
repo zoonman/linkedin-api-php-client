@@ -52,7 +52,7 @@ class GetProductReference
         }
 
         if (count($this->duplicated) > 0) {
-            (new DeactivateProduct())->run($this->duplicated);
+            (new DeactivateProductWithEmptyHash())->run($this->duplicated);
         }
 
         return $this->products;
