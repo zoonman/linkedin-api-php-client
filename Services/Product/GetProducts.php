@@ -60,8 +60,6 @@ class GetProducts
         if (count($this->duplicated) > 0) {
             (new DeactivateProductWithEmptyHash())->run($this->duplicated);
         }
-
-        return $this->allProducts;
     }
 
     /**
@@ -77,10 +75,9 @@ class GetProducts
      */
     public function getActiveProducts()
     {
+        $this->activeProducts = $this->allProducts;
         return array_filter($this->activeProducts->getItems(), function (Product $product) {
-            return ($product->getActive() == '1');
+            return $product->getActive() == '1';
         });
     }
-
-
 }
