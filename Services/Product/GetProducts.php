@@ -7,25 +7,31 @@ namespace Pricat\Services\Product;
 use Db;
 use Pricat\Entities\Product;
 
-class GetProductReference
+class GetProducts
 {
     /**
      * @var BagProducts
      */
-    private $products;
+    private $allProducts;
 
     /**
      * @var array
      */
     private $duplicated;
+    /**
+     * @var BagProducts
+     */
+    private $activeProducts;
 
     public function __construct()
     {
-        $this->products = new BagProducts();
+        $this->allProducts = new BagProducts();
+        $this->activeProducts = new BagProducts();
         $this->duplicated = [];
+        $this->run();
     }
 
-    public function run()
+    private function run()
     {
         //Se obtienen los datos de todos los productos de la base de datos incluidos datos para cache
         $sql = 'SELECT id_product, reference_ori, active, date_erp, hash_erp, date_upd, quantity FROM ' . _DB_PREFIX_ . 'product WHERE reference_ori IS NOT NULL';
@@ -33,9 +39,9 @@ class GetProductReference
 
             $reference_ori = (string)$item['reference_ori'];
 
-            if ($this->products->existsProductReference($reference_ori)) {
+            if ($this->allProducts->existsProductReference($reference_ori)) {
                 /* @var $item Product */
-                $item = $this->products->getItems()[$reference_ori];
+                $item = $this->allProducts->getItems()[$reference_ori];
                 $this->duplicated[] = $item->getId();
             }
 
@@ -48,13 +54,33 @@ class GetProductReference
                 $item['quantity'],
                 $reference_ori
             );
-            $this->products->add($product);
+            $this->allProducts->add($product);
         }
 
         if (count($this->duplicated) > 0) {
             (new DeactivateProductWithEmptyHash())->run($this->duplicated);
         }
 
-        return $this->products;
+        return $this->allProducts;
     }
+
+    /**
+     * @return array
+     */
+    public function getAllProducts()
+    {
+        return $this->allProducts->getItems();
+    }
+
+    /**
+     * @return array
+     */
+    public function getActiveProducts()
+    {
+        return array_filter($this->activeProducts->getItems(), function (Product $product) {
+            return ($product->getActive() == '1');
+        });
+    }
+
+
 }
