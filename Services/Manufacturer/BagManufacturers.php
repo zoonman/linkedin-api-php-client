@@ -45,6 +45,10 @@ class BagManufacturers
         return $item->getId();
     }
 
+    /**
+     * @param $name
+     * @return bool
+     */
     public function existsManufacturer($name)
     {
         return array_key_exists($name, $this->bag);
