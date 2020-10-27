@@ -10,7 +10,6 @@ ini_set('log_errors', '1');
 $_SERVER['REQUEST_METHOD'] = 'POST';
 
 define('PS_ROOT', realpath(__DIR__ . '/../..'));
-define('LOG_FILE', PS_ROOT . '/integraciones/Pricat/logs/GestionCSV_new_' . date('YmdHis') . '.log');
 
 require_once 'vendor/autoload.php';
 
