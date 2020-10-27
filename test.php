@@ -2,8 +2,9 @@
 
 require "bootstrap.php";
 
-use Pricat\Services\Product\GetProductReference;
+use Pricat\Services\Product\GetProducts;
 
-$bags = (new GetProductReference())->run();
+$serviceProducts = new GetProducts();
 
-var_dump($bags->getItems());
+
+var_dump($serviceProducts->getActiveProducts());

@@ -1,10 +1,10 @@
 <?php
 
 
-namespace Pricat\Services\Csv;
+namespace Pricat\Services\Product;
 
 
-class Management
+class NewProduct
 {
     public function run()
     {
