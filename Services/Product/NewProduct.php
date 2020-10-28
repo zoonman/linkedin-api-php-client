@@ -4,6 +4,7 @@
 namespace Pricat\Services\Product;
 
 
+use Db;
 use Encoding;
 use Pricat\Entities\Tire;
 use Pricat\Services\Manufacturer\ActivateManufacturer;
