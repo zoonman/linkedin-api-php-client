@@ -18,11 +18,7 @@ class ActivateManufacturer
         $this->manufacturers = $bagManufacturers;
     }
 
-    /**
-     * @param string $name
-     * @return bool
-     */
-    public function run($name)
+    public function run(string $name)
     {
         /* @var $item Manufacturer */
         $item = $this->manufacturers->getItems()[$name];

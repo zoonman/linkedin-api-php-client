@@ -10,6 +10,8 @@ class BuilderTire
 {
     /**
      * Mapea los campos del array en una entidad Tire (Neumatico)
+     * @param array $fields
+     * @return Tire
      */
     public function build(array $fields): Tire
     {

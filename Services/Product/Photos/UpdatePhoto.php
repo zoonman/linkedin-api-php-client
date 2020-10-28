@@ -4,8 +4,9 @@
 namespace Pricat\Services\Product\Photos;
 
 use Image;
+use Pricat\Entities\Tire;
 use Pricat\Utils\Helper as Utils;
-use Pricat\Utils\Prestahop\Helpers;
+use Pricat\Utils\Prestahop\Helper;
 use Pricat\Utils\Prestahop\MultiLangField;
 use Product;
 use Validate;
@@ -22,17 +23,17 @@ class UpdatePhoto
      */
     private $photos;
 
-    public function __construct(array $photos)
+    public function __construct()
     {
         $this->pathPhotos = PATH_PHOTOS;
-        $this->photos = $photos;
+        $this->photos = (new GetPhotos())->run();
     }
 
-    public function run(Product $product, $n)
+    public function run(Product $product, Tire $tire)
     {
-        $path = $this->pathPhotos . $n->imagen;
+        $path = $this->pathPhotos . $tire->imagen;
 
-        if (!in_array($n->imagen, $this->photos) && !is_file($path)) {
+        if (!in_array($tire->imagen, $this->photos) && !is_file($path)) {
             Utils::printInfo(sprintf("[Error: actualizaFoto] No se encuentra la foto: %s\n", $path));
             return;
         }
@@ -44,19 +45,19 @@ class UpdatePhoto
         $image->position = Image::getHighestPosition($product->id) + 1;
         Image::deleteCover($image->id_product);
         $image->cover = true;
-        if (!Validate::isGenericName($n->nombre)) {
+        if (!Validate::isGenericName($tire->nombre)) {
             return;
         }
 
-        $image->legend = (new MultiLangField())->run($n->nombre);
+        $image->legend = (new MultiLangField())->run($tire->nombre);
 
         if (!$image->add()) {
-            Utils::printInfo(sprintf("[Error: actualizaFoto] No se ha podido añadir la foto: %s, del producto con ID %s\n", $n->imagen, $product->id));
+            Utils::printInfo(sprintf("[Error: actualizaFoto] No se ha podido añadir la foto: %s, del producto con ID %s\n", $tire->imagen, $product->id));
             return;
         }
 
-        if (Helpers::copyImg($product->id, $image->id, $path)) {
-            Utils::printInfo(sprintf("[Error: actualizaFoto] No se ha podido copiar la imagen: %s, del producto con ID %s\n", $n->imagen, $product->id));
+        if (Helper::copyImg($product->id, $image->id, $path)) {
+            Utils::printInfo(sprintf("[Error: actualizaFoto] No se ha podido copiar la imagen: %s, del producto con ID %s\n", $tire->imagen, $product->id));
         }
     }
 }

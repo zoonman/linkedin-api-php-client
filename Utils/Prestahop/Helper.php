@@ -17,7 +17,7 @@ use StockAvailable;
 use Tools;
 use Validate;
 
-class Helpers
+class Helper
 {
     /**
      * Método nativo Prestashop 1.6.0.9: AdminImportController::copyImg

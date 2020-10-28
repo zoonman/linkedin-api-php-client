@@ -13,7 +13,7 @@ class AddReferenceOriginalToProduct
      * @param Product $productModelPrestahop
      * @param string $reference
      */
-    public function run(Product $productModelPrestahop, $reference)
+    public function run(Product $productModelPrestahop, string $reference)
     {
         try {
             Db::getInstance()->Execute('UPDATE ' . _DB_PREFIX_ . 'product

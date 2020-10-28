@@ -8,37 +8,37 @@ use Pricat\Utils\Helper as Utils;
 
 class Tire
 {
-    private $reference;
-    private $reference_ori;
-    private $nombre;
-    private $hash;
-    private $ean13;
-    private $marca;
-    private $ecotasa;
-    private $precioneto;
-    private $imagen;
-    private $anchura;
-    private $altura;
-    private $diametro;
-    private $carga;
-    private $velocidad;
-    private $eficienciaA;
-    private $eficienciaB;
-    private $eficienciaC;
-    private $nieve;
-    private $runflat;
-    private $estaciones;
-    private $percarretera;
-    private $percampo;
-    private $cubrellanta;
-    private $modelo;
-    private $temporada;
-    private $tipo;
-    private $consumo;
-    private $oferta;
+    public $reference;
+    public $reference_ori;
+    public $nombre;
+    public $hash;
+    public $ean13;
+    public $marca;
+    public $ecotasa;
+    public $precioneto;
+    public $imagen;
+    public $anchura;
+    public $altura;
+    public $diametro;
+    public $carga;
+    public $velocidad;
+    public $eficienciaA;
+    public $eficienciaB;
+    public $eficienciaC;
+    public $nieve;
+    public $runflat;
+    public $estaciones;
+    public $percarretera;
+    public $percampo;
+    public $cubrellanta;
+    public $modelo;
+    public $temporada;
+    public $tipo;
+    public $consumo;
+    public $oferta;
     //private $dot;
-    private $recomendado;
-    private $stock;
+    public $recomendado;
+    public $stock;
 
     /**
      * @var array
