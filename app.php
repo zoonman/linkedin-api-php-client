@@ -55,11 +55,9 @@ try {
 
 
 } catch (Exception $e) {
-    $msg = $e->getMessage();
+    $msg = "{$e->getMessage()} - {$e->getFile()} - {$e->getLine()}";
     Utils::printInfo($msg);
-    Utils::printInfo($e->getFile());
-    Utils::printInfo($e->getLine());
-    //mail(EMAIL_ADMIN, sprintf('[%s] Error GestionCSV', SHOP_NAME), $msg);
+    mail(EMAIL_ADMIN, sprintf('[%s] Error GestionCSV', SHOP_NAME), $msg);
 }
 
 
