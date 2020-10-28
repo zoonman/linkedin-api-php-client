@@ -40,9 +40,9 @@ class GetProducts
             $reference_ori = (string)$item['reference_ori'];
 
             if ($this->allProducts->existsProductReference($reference_ori)) {
-                /* @var $item Product */
-                $item = $this->allProducts->getItems()[$reference_ori];
-                $this->duplicated[] = $item->getId();
+                /* @var $productModel Product */
+                $productModel = $this->allProducts->getItems()[$reference_ori];
+                $this->duplicated[] = $productModel->getId();
             }
 
             $product = new Product(
