@@ -112,11 +112,12 @@ class Management
             $temp = microtime(true);
             $product = 0;
             if (array_key_exists($n->reference, $this->products)) {
+                /** @var $product Product */
                 $product = $this->products[$n->reference];
-                $product->id = $product->id_product;
+                //$product->id = $product->getId();
                 $est = (new UpdateProduct($this->manufacturers))->run($product, $n, $todo);
                 if (!$n->stock) {
-                    $nostock[] = $product->id;
+                    $nostock[] = $product->getId();
                 }
             } else if ($n->stock > 0) {
                 $product = (new NewProduct($this->manufacturers))->run($n);

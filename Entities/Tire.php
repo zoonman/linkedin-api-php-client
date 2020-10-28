@@ -89,7 +89,7 @@ class Tire
             $this->precioneto = Utils::getFloatFormatted($this->fields[62], 2);
 
             // Calcular precioneto con IVA, menos ecotasa (la suma Prestashop automáticamente)
-            $this->precioneto = (($this->precioneto + $this->ecotasa) * $this->iva) - $this->ecotasa;
+            $this->precioneto = (($this->precioneto + $this->ecotasa) * IVA) - $this->ecotasa;
 
             $this->imagen = strtolower($this->fields[24]);
 

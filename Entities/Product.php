@@ -4,13 +4,14 @@ namespace Pricat\Entities;
 
 class Product
 {
-    private $id;
+    public $id;
     private $active;
     private $dateErp;
     private $hashErp;
     private $dateUpd;
     private $stock;
     private $reference;
+    private $quantity;
 
     public function __construct($id, $active, $dateErp, $hashErp, $dateUpd, $stock, $reference)
     {
@@ -77,6 +78,22 @@ class Product
     public function getReference()
     {
         return $this->reference;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getQuantity()
+    {
+        return $this->quantity;
+    }
+
+    /**
+     * @param mixed $quantity
+     */
+    public function setQuantity($quantity): void
+    {
+        $this->quantity = $quantity;
     }
 
 

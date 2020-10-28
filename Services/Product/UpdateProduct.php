@@ -10,7 +10,6 @@ use Pricat\Services\Product\Photos\UpdatePhoto;
 use Pricat\Services\Seo\FillSeo;
 use Pricat\Utils\Helper as Utils;
 use Pricat\Utils\Prestahop\Helper;
-use Product;
 
 class UpdateProduct
 {
@@ -24,21 +23,21 @@ class UpdateProduct
         $this->bagManufacturers = $bagManufacturers;
     }
 
-    public function run(Product $product, Tire $tire, bool $todo = false)
+    public function run(\Pricat\Entities\Product $product, Tire $tire, bool $todo = false)
     {
         if (
-            ($product->date_upd == $product->date_erp and $product->hash_erp == $tire->hash and $tire->stock == $product->stock)
+            ($product->getDateUpd() == $product->getDateErp() && $product->getHashErp() == $tire->hash && $tire->stock == $product->getStock())
             ||
-            ($tire->stock == 0 and $tire->stock == $product->stock and !$product->hash_erp and $product->date_upd == $product->date_erp)
+            ($tire->stock == 0 && $tire->stock == $product->getStock() and !$product->getHashErp() and $product->getDateUpd() == $product->getDateErp())
         ) {
-            if ($product->hash_erp) {
+            if ($product->getHashErp()) {
                 return 0;
             }
         }
 
         //En el caso de stock=0 o solo cambio de stock solo actualizamos el stock, en caso contrario hacemos carga completa
-        if ($product->date_upd == $product->date_erp and $product->hash_erp == $tire->hash and $product->hash_erp) {
-            $product->quantity = (int)$tire->stock;
+        if ($product->getDateUpd() == $product->getDateErp() && $product->getHashErp() == $tire->hash and $product->getHashErp()) {
+            $product->setQuantity((int)$tire->stock);
             if ($tire->stock) {
                 $est = 2;
             } else {
@@ -48,14 +47,14 @@ class UpdateProduct
                 SET quantity = ' . $tire->stock . ',
                 active = 1, visibility = \'both\', available_for_order=1,
                 date_upd = now()
-                WHERE id_product = ' . $product->id);
+                WHERE id_product = ' . $product->getId());
 
             Db::getInstance()->Execute('UPDATE ' . _DB_PREFIX_ . 'product_shop
                 SET active = 1, visibility = \'both\', available_for_order=1,
                 date_upd = now()
-                WHERE id_product = ' . $product->id);
+                WHERE id_product = ' . $product->getId());
         } else {
-            $product = new \Product($product->id_product);
+            $product = new \Product($product->getId());
             if ($todo) {
                 (new UpdateFeatures())->run($product->id, $tire);
                 (new UpdatePhoto())->run($product, $tire);
