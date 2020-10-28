@@ -22,14 +22,17 @@ require PS_ROOT . '/images.inc.php';
 require __DIR__ . "/config/globals.php";
 
 
-if (isset($_GET['s']) && $_GET['s'] == 'jfdisuf9234tgjv0sdg34gtdfh') {
-    define('USERMODE', true);
-    ini_set('max_execution_time', 8000000);
-} elseif (PHP_SAPI != 'cli') {
-    exit();
-} else {
-    define('USERMODE', false);
-}
+//if (isset($_GET['s']) && $_GET['s'] == 'jfdisuf9234tgjv0sdg34gtdfh') {
+//    define('USERMODE', true);
+//    ini_set('max_execution_time', 8000000);
+//} elseif (PHP_SAPI != 'cli') {
+//    exit();
+//} else {
+//    define('USERMODE', false);
+//}
+
+define('USERMODE', true);
+ini_set('max_execution_time', 8000000);
 
 gc_collect_cycles();
 gc_disable();
