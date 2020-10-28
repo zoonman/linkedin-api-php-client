@@ -1,6 +1,6 @@
 <?php
 
-define("DEBUG_MODE", false);
+define("DEBUG_MODE", true);
 //define('EMAIL_ADMIN', 'alfonso@missconversion.es');
 define("EMAIL_ADMIN", "carlos@bokokode.com");
 define("GESTIONCSV_HASH_VERSION", "20180912");
