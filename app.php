@@ -57,7 +57,7 @@ try {
 } catch (Exception $e) {
     $msg = $e->getMessage();
     Utils::printInfo($msg);
-    mail("carlos@bokokode.com", sprintf('[%s] Error GestionCSV', SHOP_NAME), $msg);
+    mail(EMAIL_ADMIN, sprintf('[%s] Error GestionCSV', SHOP_NAME), $msg);
 }
 
 
