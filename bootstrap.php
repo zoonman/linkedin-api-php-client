@@ -12,6 +12,8 @@ $_SERVER['REQUEST_METHOD'] = 'POST';
 define('PS_ROOT', realpath(__DIR__ . '/../..'));
 define('PRICAT_ROOT', realpath(__DIR__));
 
+ini_set('error_log', PRICAT_ROOT . '/logs/error.log');
+
 require_once 'vendor/autoload.php';
 
 require PS_ROOT . '/config/config.inc.php';
