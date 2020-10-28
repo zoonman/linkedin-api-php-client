@@ -32,10 +32,10 @@ class BagManufacturers
     }
 
     /**
-     * @param string $name
+     * @param string|null $name
      * @return int
      */
-    public function getIdManufacturer(string $name): int
+    public function getIdManufacturer(?string $name): int
     {
         if (!array_key_exists($name, $this->bag)) {
             return -1;
@@ -46,10 +46,10 @@ class BagManufacturers
     }
 
     /**
-     * @param string $name
+     * @param string|null $name
      * @return bool
      */
-    public function existsManufacturer(string $name): bool
+    public function existsManufacturer(?string $name): bool
     {
         return array_key_exists($name, $this->bag);
     }
