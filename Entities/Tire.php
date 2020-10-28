@@ -77,14 +77,6 @@ class Tire
     {
         $this->ean13 = $this->fields[2];
 
-        $this->nombre = str_replace(array('\\"NIEVE\\"', '\\"RUNFLAT\\"', '\\"4E\\"'), ' ', $this->fields[5]);
-        $this->nombre = str_replace("´", "'", $this->nombre);
-        $this->nombre = utf8_decode($this->nombre);
-
-        if (in_array($this->nombre[mb_strlen($this->nombre) - 1], ["@", ".", ","])) {
-            $this->nombre = substr($this->nombre, 0, -1);
-        }
-
         $this->marca = $this->fields[12];
 
         $this->ecotasa = Utils::getFloatFormatted($this->fields[64], 2);
@@ -116,6 +108,8 @@ class Tire
         $this->modelo = $this->fields[52];
         $this->tipo = $this->fields[55];
         $this->consumo = $this->fields[66];
+
+        $this->nombre = strtoupper("{$this->marca} {$this->modelo} {$this->anchura}/{$this->altura} R {$this->diametro} {$this->carga}{$this->velocidad}");
 
         $descripcion_last_char = substr($this->nombre, -1);
         $this->oferta = ($descripcion_last_char == '.') ? 1 : 0;
