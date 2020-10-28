@@ -133,6 +133,8 @@ class UpdateProduct
             Db::getInstance()->Execute('DELETE FROM ' . _DB_PREFIX_ . 'category_product WHERE id_product=' . $product->id);
             $product->addToCategories($categories);
             (new AddReferenceOriginalToProduct())->run($product, $tire->reference_ori);
+            (new InsertDescription())->short($product, $tire);
+            (new InsertDescription())->long($product, $tire);
             $est = 3;
         }
 

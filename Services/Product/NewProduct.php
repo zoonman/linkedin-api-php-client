@@ -126,7 +126,8 @@ class NewProduct
         (new UpdatePhoto())->run($product, $tire);
         (new AddReferenceOriginalToProduct())->run($product, $tire->reference_ori);
         (new CheckFeaturesValues())->run($product, $tire);
-
+        (new InsertDescription())->short($product, $tire);
+        (new InsertDescription())->long($product, $tire);
         //Se guardan los flags para la sincronización con el ERP
         Db::getInstance()->Execute('UPDATE ' . _DB_PREFIX_ . 'product
             SET date_erp = now(),
