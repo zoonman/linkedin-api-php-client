@@ -42,6 +42,10 @@ class Tire
     //private $dot;
     public $recomendado;
     public $stock;
+    public $medida;
+    public $segmento;
+    public $xl;
+    public $mS;
 
     /**
      * @var array
@@ -118,6 +122,12 @@ class Tire
         $this->assingTemporada();
         $this->assingTipo();
         $this->assingCubreLlanta();
+        $this->assingSegmento();
+
+        $this->medida = "{$this->anchura} {$this->altura} R{$this->diametro}";
+        $this->xl = strpos($this->nombre, "XL") !== false ? "Sí" : "";
+        $this->mS = $this->fields[75] == '1' ? "Sí" : "";
+
     }
 
     private function assingTemporada()
@@ -163,7 +173,19 @@ class Tire
             $this->cubrellantaText = "Sí";
             return;
         }
+    }
 
+    private function assingSegmento()
+    {
+        if ($this->fields[79] == 'PREMIUM') {
+            $this->segmento = "Premium";
+        }
+        if ($this->fields[79] == 'QUALITY') {
+            $this->segmento = "Calidad/Precio";
+        }
+        if ($this->fields[79] == 'BUDGET') {
+            $this->segmento = "Ecónomicos";
+        }
     }
 
 }

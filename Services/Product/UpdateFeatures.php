@@ -108,6 +108,18 @@ class UpdateFeatures
                     case 21:
                         $value = $tire->consumo;
                         break;
+                    case 22:
+                        $value = $tire->medida;
+                        break;
+                    case 23:
+                        $value = $tire->segmento;
+                        break;
+                    case 24:
+                        $value = $tire->xl;
+                        break;
+                    case 25:
+                        $value = $tire->mS;
+                        break;
                 }
             } else {
                 $idFeature = -1;
