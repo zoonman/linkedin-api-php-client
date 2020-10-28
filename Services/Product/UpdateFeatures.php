@@ -94,16 +94,16 @@ class UpdateFeatures
                         $value = $tire->percampo;
                         break;
                     case 17:
-                        $value = $tire->cubrellanta;
+                        $value = $tire->cubrellantaText;
                         break;
                     case 18:
                         $value = $tire->modelo;
                         break;
                     case 19:
-                        $value = $tire->temporada;
+                        $value = $tire->temporadaText;
                         break;
                     case 20:
-                        $value = $tire->tipo;
+                        $value = $tire->tipoText;
                         break;
                     case 21:
                         $value = $tire->consumo;

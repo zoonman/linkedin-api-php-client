@@ -19,10 +19,10 @@ class CheckFeaturesValues
         try {
             $productFeatures = $product->getFeatures();
             if ($productFeatures && is_array($productFeatures) && count($productFeatures) <= 0) {
-                $this->actualizaCaracteristicas($id_product, $tire);
+                (new UpdateFeatures())->run($product->id, $tire);
             }
         } catch (\Exception $e) {
-            Utils::printInfo(sprintf("[Error: checkFeaturesValues] Error al comprobar las características del producto: %s\n", $id_product));
+            Utils::printInfo(sprintf("[Error: checkFeaturesValues] Error al comprobar las características del producto: %s\n", $product->id));
         }
     }
 }

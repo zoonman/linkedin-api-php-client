@@ -31,9 +31,12 @@ class Tire
     public $percarretera;
     public $percampo;
     public $cubrellanta;
+    public $cubrellantaText;
     public $modelo;
     public $temporada;
+    public $temporadaText;
     public $tipo;
+    public $tipoText;
     public $consumo;
     public $oferta;
     //private $dot;
@@ -111,14 +114,62 @@ class Tire
         $this->percampo = $this->fields[27];
         $this->cubrellanta = $this->fields[44];
         $this->modelo = $this->fields[52];
-        $this->temporada = $this->fields[54];
         $this->tipo = $this->fields[55];
         $this->consumo = $this->fields[66];
 
         $descripcion_last_char = substr($this->nombre, -1);
         $this->oferta = ($descripcion_last_char == '.') ? 1 : 0;
         $this->recomendado = ($descripcion_last_char == ',') ? 1 : 0;
+
+        $this->assingTemporada();
+        $this->assingTipo();
+        $this->assingCubreLlanta();
     }
 
+    private function assingTemporada()
+    {
+        if ($this->fields[54] == '300') {
+            $this->temporadaText = "4 Estaciones";
+            return;
+        }
+
+        if ($this->fields[54] == '200') {
+            $this->temporadaText = "Invierno";
+            return;
+        }
+        $this->temporadaText = "Verano";
+    }
+
+    private function assingTipo()
+    {
+        if ($this->fields[55] == 'C0') {
+            $this->tipoText = "Turismo";
+            return;
+        }
+
+        if ($this->fields[55] == 'L0') {
+            $this->tipoText = "Furgoneta";
+            return;
+        }
+
+        if ($this->fields[55] == 'L4') {
+            $this->tipoText = "4x4";
+            return;
+        }
+
+        if ($this->fields[55] == 'T0') {
+            $this->tipoText = "Camión";
+            return;
+        }
+    }
+
+    private function assingCubreLlanta()
+    {
+        if ($this->fields[44] == 'X') {
+            $this->cubrellantaText = "Sí";
+            return;
+        }
+
+    }
 
 }
