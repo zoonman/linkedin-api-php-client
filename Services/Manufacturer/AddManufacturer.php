@@ -19,10 +19,8 @@ class AddManufacturer
         $this->bag = $bagManufacturers;
     }
 
-    /**
-     * @param string $name
-     */
-    public function run($name)
+
+    public function run(string $name): string
     {
         $name = strtoupper(trim($name));
         Utils::printDebug(sprintf("addManufacturer: %s\n", $name));
@@ -37,5 +35,7 @@ class AddManufacturer
 
         $manufacturer = new Manufacturer($manufacturer->id, $manufacturer->name, $manufacturer->active);
         $this->bag->add($manufacturer);
+
+        return $name;
     }
 }
