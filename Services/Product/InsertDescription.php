@@ -78,11 +78,35 @@ class InsertDescription
 
         $blockMedidas = <<<EOF
             <p>Cuenta con unas medidas de: anchura de {$tire->anchura} mm, un perfil de {$tire->altura} mm y un diámetro de <strong>R {$tire->diametro}</strong>.</p>
-            <p>Su índice de carga es de {$tire->carga}, que equivale a una <strong>carga máxima de XXXXX kilogramos</strong>.</p>
-            <p>El {$tire->nombre} tiene un <strong>índice de velocidad {$tire->velocidad}</strong>, este índice permite una velocidad máxima de XXXXXX Km/h.</p>
+            <p>Su índice de carga es de {$tire->carga}, que equivale a una <strong>carga máxima de {$tire->carga} kilogramos</strong>.</p>
+            <p>El {$tire->nombre} tiene un <strong>índice de velocidad {$tire->velocidad}</strong>, este índice permite una velocidad máxima de {$tire->velocidad} Km/h.</p>
         EOF;
 
-        $productModelPrestashop->description = "$firstBlock $blockTextTemporada $blockRunFalt $blockMedidas";
+        if ($tire->eficienciaB == "A" || $tire->eficienciaB == "B" || $tire->eficienciaB == "C") {
+            $blockAdherencia = <<<EOF
+            <h3>Adherencia y frenado</h3>
+            <p>- Alta durabilidad y adherencia en carreteras</p>
+            <p>- Buena estabilidad en condiciones climatológicas adversas</p>
+            <p>Buena capacidad de frenado</p>
+        EOF;
+        } else {
+            $blockAdherencia = <<<EOF
+            <h3>Adherencia y frenado</h3>
+            <p>- Durabilidad y adherencia moderadas</p>
+            <p>- Estabilidad media en condiciones climatológicas adversas</p>
+            <p>- Capacidad de frenado moderada</p>
+        EOF;
+        }
+        $modeloLower = strtolower($tire->modelo);
+        $blockMoreText = <<<EOF
+            <p>Encuentra más neumáticos con la medida {$tire->anchura}/perfil/R{$tire->diametro}. Recuerda también que puedes encontrar neumáticos equivalentes 
+            a la medida {$tire->anchura}/perfil/R{$tire->diametro}</p> utilizando nuestra 
+            <a href="https://www.yofindo.com/guias/equivalencia-de-neumaticos">calculadora de equivalencias.</a>.</p>
+            <p>Encuentra otros neumáticos de la marca {$productModelPrestashop->manufacturer_name} al mejor precio.</p>
+            <p>¿Necesitas otra versión o medida del {$tire->modelo}? Encuentra más neumáticos <a href="https://www.yofindo.com/comprar-neumaticos/{$modeloLower}">{$tire->modelo}</a>.</p>
+        EOF;
+
+        $productModelPrestashop->description = "$firstBlock $blockTextTemporada $blockRunFalt $blockMedidas $blockAdherencia $blockMoreText";
         try {
             $productModelPrestashop->save();
         } catch (PrestaShopException $e) {

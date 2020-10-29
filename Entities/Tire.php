@@ -113,7 +113,7 @@ class Tire
         $this->tipo = $this->fields[55];
         $this->consumo = $this->fields[66];
 
-        $this->nombre = strtoupper("{$this->marca} {$this->modelo} {$this->anchura}/{$this->altura} R {$this->diametro} {$this->carga}{$this->velocidad}");
+        $this->nombre = ucwords("{$this->marca} {$this->modelo}") . strtoupper("{$this->anchura}/{$this->altura} R {$this->diametro} {$this->carga}{$this->velocidad}");
 
         $descripcion_last_char = substr($this->nombre, -1);
         $this->oferta = ($descripcion_last_char == '.') ? 1 : 0;
