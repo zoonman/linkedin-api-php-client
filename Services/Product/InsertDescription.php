@@ -99,8 +99,8 @@ class InsertDescription
         }
         $modeloLower = strtolower($tire->modelo);
         $blockMoreText = <<<EOF
-            <p>Encuentra más neumáticos con la medida {$tire->anchura}/perfil/R{$tire->diametro}. Recuerda también que puedes encontrar neumáticos equivalentes 
-            a la medida {$tire->anchura}/perfil/R{$tire->diametro}</p> utilizando nuestra 
+            <p>Encuentra más neumáticos con la medida {$tire->anchura}/R{$tire->diametro}. Recuerda también que puedes encontrar neumáticos equivalentes 
+            a la medida {$tire->anchura}/R{$tire->diametro}</p> utilizando nuestra 
             <a href="https://www.yofindo.com/guias/equivalencia-de-neumaticos">calculadora de equivalencias.</a>.</p>
             <p>Encuentra otros neumáticos de la marca {$productModelPrestashop->manufacturer_name} al mejor precio.</p>
             <p>¿Necesitas otra versión o medida del {$tire->modelo}? Encuentra más neumáticos <a href="https://www.yofindo.com/comprar-neumaticos/{$modeloLower}">{$tire->modelo}</a>.</p>
