@@ -23,6 +23,13 @@ require PS_ROOT . '/images.inc.php';
 
 require __DIR__ . "/config/globals.php";
 
+if (!is_dir(PRICAT_ROOT . "/csv")) {
+    mkdir(PRICAT_ROOT . "/csv", 0775);
+}
+
+if (!is_dir(PRICAT_ROOT . "/logs")) {
+    mkdir(PRICAT_ROOT . "/logs", 0775);
+}
 
 if (isset($_GET['s']) && $_GET['s'] == 'jfdisuf9234tgjv0sdg34gtdfh') {
     define('USERMODE', true);
