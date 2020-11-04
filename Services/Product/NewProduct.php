@@ -5,12 +5,12 @@ namespace Pricat\Services\Product;
 
 
 use Db;
-use Encoding;
 use Pricat\Entities\Tire;
 use Pricat\Services\Manufacturer\ActivateManufacturer;
 use Pricat\Services\Manufacturer\BagManufacturers;
 use Pricat\Services\Product\Photos\UpdatePhoto;
 use Pricat\Services\Seo\FillSeo;
+use Pricat\Utils\Encoding;
 use Pricat\Utils\Helper as Utils;
 use Product;
 
