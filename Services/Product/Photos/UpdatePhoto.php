@@ -33,11 +33,10 @@ class UpdatePhoto
     {
         $path = $this->pathPhotos . $tire->imagen;
 
-        if (!in_array($tire->imagen, $this->photos) && !is_file($path)) {
-            if (!copy(URL_DOWNLOAD_IMAGE . $tire->imagen, PATH_PHOTOS . $tire->imagen)) {
-                Utils::printInfo(sprintf("[Error: actualizaFoto] No se encuentra la foto: %s\n", $path));
-                return;
-            }
+        if ((!in_array($tire->imagen, $this->photos) && !is_file($path))
+            && !copy(URL_DOWNLOAD_IMAGE . $tire->imagen, PATH_PHOTOS . $tire->imagen)) {
+            Utils::printInfo(sprintf("[Error: actualizaFoto] No se encuentra la foto: %s\n", $path));
+            return;
         }
 
         $product->deleteImages();
