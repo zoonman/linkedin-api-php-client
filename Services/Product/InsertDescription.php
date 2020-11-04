@@ -14,21 +14,23 @@ class InsertDescription
     public function short(Product $productModelPrestashop, Tire $tire)
     {
         $label = "";
+        $classSeason = "fas fa-sun";
         if ($tire->temporadaText == "4 Estaciones") {
             $label = "Neumático 4 estaciones";
         }
         if ($tire->temporadaText == "Invierno") {
             $label = "Neumático de invierno";
+            $classSeason = "fas fa-snowflake";
         }
         if ($tire->temporadaText == "Verano") {
             $label = "Neumático de verano";
         }
         $str = <<<EOF
             <div class="etiqueta">
-               <span class=""> <i class="fas fa-gas-pump" title="Resistencia "></i>&nbsp;</span>&nbsp;&nbsp;
-               <span class="">  <i class="fas fa-cloud-rain" title="Adherencia"></i>&nbsp;</span>&nbsp;&nbsp; 
+               <span class="{$tire->eficienciaA}"> <i class="fas fa-gas-pump" title="Resistencia "></i>&nbsp;</span>&nbsp;&nbsp;
+               <span class="{$tire->eficienciaB}">  <i class="fas fa-cloud-rain" title="Adherencia"></i>&nbsp;</span>&nbsp;&nbsp; 
                <i class="fas fa-volume-up" title="Índice sonoro"></i>&nbsp; dB &nbsp;
-               <i class="fas fa-sun" title="$label"></i>
+               <i class="$classSeason" title="$label"></i>
             </div>
         EOF;
 
@@ -78,8 +80,8 @@ class InsertDescription
 
         $blockMedidas = <<<EOF
             <p>Cuenta con unas medidas de: anchura de {$tire->anchura} mm, un perfil de {$tire->altura} mm y un diámetro de <strong>R {$tire->diametro}</strong>.</p>
-            <p>Su índice de carga es de {$tire->carga}, que equivale a una <strong>carga máxima de {$this->getKg($tire->carga)} kilogramos</strong>.</p>
-            <p>El {$tire->nombre} tiene un <strong>índice de velocidad {$tire->velocidad}</strong>, este índice permite una velocidad máxima de {$this->getSpeed($tire->velocidad)} Km/h.</p>
+            <p>Su índice de carga es de {$tire->carga}{$this->formatKg($tire->carga)}.</p>
+            <p>El {$tire->nombre} tiene un <strong>índice de velocidad {$tire->velocidad}</strong>{$this->formatSpeed($tire->velocidad)}.</p>
         EOF;
 
         if ($tire->eficienciaB == "A" || $tire->eficienciaB == "B" || $tire->eficienciaB == "C") {
@@ -106,123 +108,129 @@ class InsertDescription
         }
     }
 
-    private function getSpeed(string $value): string
+    private function formatSpeed(string $value): string
     {
-        $format = "x-x-x-x-x";
+        $format = "";
         if ($value == "M") {
-            return "130";
+            $format = "130";
         }
         if ($value == "P") {
-            return "150";
+            $format = "150";
         }
         if ($value == "S") {
-            return "180";
+            $format = "180";
         }
         if ($value == "R") {
-            return "170";
+            $format = "170";
         }
         if ($value == "U") {
-            return "200";
+            $format = "200";
         }
         if ($value == "VR") {
-            return ">210";
+            $format = ">210";
         }
         if ($value == "W") {
-            return "270";
+            $format = "270";
         }
         if ($value == "N") {
-            return "140";
+            $format = "140";
         }
         if ($value == "Q") {
-            return "160";
+            $format = "160";
         }
         if ($value == "T") {
-            return "190";
+            $format = "190";
         }
         if ($value == "H") {
-            return "210";
+            $format = "210";
         }
         if ($value == "ZR") {
-            return ">240";
+            $format = ">240";
         }
         if ($value == "V") {
-            return "240";
+            $format = "240";
         }
         if ($value == "Y") {
-            return "300";
+            $format = "300";
         }
-        return $format;
+        if (empty($format)) {
+            return $format;
+        }
+        return ", este índice permite una velocidad máxima de $format Km/h";
     }
 
-    private function getKg(string $value): string
+    private function formatKg(string $value): string
     {
-        $format = "x-x-x-x-x";
+        $format = "";
         if ($value == "65") {
-            return "290";
+            $format = "290";
         }
         if ($value == "66") {
-            return "300";
+            $format = "300";
         }
         if ($value == "69") {
-            return "325";
+            $format = "325";
         }
         if ($value == "72") {
-            return "355";
+            $format = "355";
         }
         if ($value == "75") {
-            return "387";
+            $format = "387";
         }
         if ($value == "78") {
-            return "425";
+            $format = "425";
         }
         if ($value == "81") {
-            return "462";
+            $format = "462";
         }
         if ($value == "84") {
-            return "500";
+            $format = "500";
         }
         if ($value == "67") {
-            return "307";
+            $format = "307";
         }
         if ($value == "70") {
-            return "335";
+            $format = "335";
         }
         if ($value == "73") {
-            return "365";
+            $format = "365";
         }
         if ($value == "76") {
-            return "400";
+            $format = "400";
         }
         if ($value == "79") {
-            return "437";
+            $format = "437";
         }
         if ($value == "82") {
-            return "475";
+            $format = "475";
         }
         if ($value == "85") {
-            return "515";
+            $format = "515";
         }
         if ($value == "68") {
-            return "315";
+            $format = "315";
         }
         if ($value == "71") {
-            return "345";
+            $format = "345";
         }
         if ($value == "74") {
-            return "375";
+            $format = "375";
         }
         if ($value == "77") {
-            return "412";
+            $format = "412";
         }
         if ($value == "80") {
-            return "450";
+            $format = "450";
         }
         if ($value == "83") {
-            return "487";
+            $format = "487";
         }
         if ($value == "86") {
-            return "530";
+            $format = "530";
         }
-        return $format;
+        if (empty($format)) {
+            return $format;
+        }
+        return ", que equivale a una <strong>carga máxima de $format kilogramos</strong>";
     }
 }
