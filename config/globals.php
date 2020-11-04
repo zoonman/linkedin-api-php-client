@@ -9,3 +9,4 @@ define("PATH_CSV_FILE", PRICAT_ROOT . "/csv/PRICAT_WEBTOP.CSV");
 define("PATH_PHOTOS", PRICAT_ROOT . "/photos/");
 define("LOG_FILE", PS_ROOT . "/integraciones/Pricat/logs/GestionCSV_new_" . date("YmdHis") . ".log");
 define("IVA", 1.21); // 21%
+define("URL_DOWNLOAD_IMAGE", "https://www.muchoneumatico.com/images/products/sinMarcaAgua/l/"); // 21%
