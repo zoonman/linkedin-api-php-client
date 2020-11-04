@@ -128,6 +128,13 @@ class NewProduct
         (new CheckFeaturesValues())->run($product, $tire);
         (new InsertDescription())->short($product, $tire);
         (new InsertDescription())->long($product, $tire);
+
+        if ($tire->stock > 4) {
+            \StockAvailable::setProductOutOfStock($product->id, 1);
+        } else {
+            \StockAvailable::setProductOutOfStock($product->id, 2);
+        }
+
         //Se guardan los flags para la sincronización con el ERP
         Db::getInstance()->Execute('UPDATE ' . _DB_PREFIX_ . 'product
             SET date_erp = now(),

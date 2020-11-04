@@ -140,7 +140,12 @@ class UpdateProduct
 
         //Caches de stock prestashop
 
-        \StockAvailable::setProductOutOfStock($product->id, 2);
+        if ($tire->stock > 4) {
+            \StockAvailable::setProductOutOfStock($product->id, 1);
+        } else {
+            \StockAvailable::setProductOutOfStock($product->id, 2);
+        }
+
         Helper::setQuantity($product->id, 0, $tire->stock);
 
         //Se guardan las variables del erp
