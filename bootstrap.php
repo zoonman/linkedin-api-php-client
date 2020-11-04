@@ -32,7 +32,7 @@ if (!is_dir(PRICAT_ROOT . "/logs")) {
 }
 
 if (!is_dir(PRICAT_ROOT . "/photos")) {
-    mkdir(PRICAT_ROOT . "/logs", 0775);
+    mkdir(PRICAT_ROOT . "/photos", 0775);
 }
 
 if (isset($_GET['s']) && $_GET['s'] == 'jfdisuf9234tgjv0sdg34gtdfh') {
