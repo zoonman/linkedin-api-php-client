@@ -31,6 +31,10 @@ if (!is_dir(PRICAT_ROOT . "/logs")) {
     mkdir(PRICAT_ROOT . "/logs", 0775);
 }
 
+if (!is_dir(PRICAT_ROOT . "/photos")) {
+    mkdir(PRICAT_ROOT . "/logs", 0775);
+}
+
 if (isset($_GET['s']) && $_GET['s'] == 'jfdisuf9234tgjv0sdg34gtdfh') {
     define('USERMODE', true);
     ini_set('max_execution_time', 8000000);
