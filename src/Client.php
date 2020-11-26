@@ -352,10 +352,15 @@ class Client
      */
     public static function responseToArray($response)
     {
-        return \GuzzleHttp\json_decode(
-            $response->getBody()->getContents(),
-            true
-        );
+        $result = [];
+        if ($contents = $response->getBody()->getContents()) {
+            $result = \GuzzleHttp\json_decode(
+                $contents,
+                true
+            );
+        }
+
+        return $result;
     }
 
     /**
