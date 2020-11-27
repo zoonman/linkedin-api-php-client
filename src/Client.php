@@ -280,12 +280,10 @@ class Client
     {
         if (!empty($code)) {
             $uri = $this->buildUrl('accessToken', []);
+            $headers = $this->getApiHeaders();
+            $headers['Connection'] = 'Keep-Alive';
             $guzzle = new GuzzleClient([
-                'headers' => [
-                    'Content-Type' => 'application/json',
-                    'x-li-format' => 'json',
-                    'Connection' => 'Keep-Alive'
-                ]
+                'headers' => $headers,
             ]);
             try {
                 $response = $guzzle->post($uri, ['form_params' => [
@@ -319,17 +317,15 @@ class Client
     {
         if (!empty($refreshToken)) {
             $uri = $this->buildUrl('accessToken', []);
+            $headers = $this->getApiHeaders();
+            $headers['Connection'] = 'Keep-Alive';
             $guzzle = new GuzzleClient([
-                'headers' => [
-                    'Content-Type' => 'application/json',
-                    'x-li-format' => 'json',
-                    'Connection' => 'Keep-Alive'
-                ]
+                'headers' => $headers,
             ]);
             try {
                 $response = $guzzle->post($uri, ['form_params' => [
                     'grant_type' => self::OAUTH2_REFRESH_TOKEN,
-                    'refresh_token' => $refreshToken,
+                    self::OAUTH2_REFRESH_TOKEN => $refreshToken,
                     'client_id' => $this->getClientId(),
                     'client_secret' => $this->getClientSecret(),
                 ]]);
