@@ -137,6 +137,7 @@ class Client
     protected $apiHeaders = [
         'Content-Type' => 'application/json',
         'x-li-format' => 'json',
+        'X-Restli-Protocol-Version' => '2.0.0',
     ];
 
     /**
