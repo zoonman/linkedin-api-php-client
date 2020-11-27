@@ -282,6 +282,7 @@ class Client
         if (!empty($code)) {
             $uri = $this->buildUrl('accessToken', []);
             $headers = $this->getApiHeaders();
+            $headers['Content-Type'] = 'application/x-www-form-urlencoded';
             $headers['Connection'] = 'Keep-Alive';
             $guzzle = new GuzzleClient([
                 'headers' => $headers,
@@ -319,6 +320,7 @@ class Client
         if (!empty($refreshToken)) {
             $uri = $this->buildUrl('accessToken', []);
             $headers = $this->getApiHeaders();
+            $headers['Content-Type'] = 'application/x-www-form-urlencoded';
             $headers['Connection'] = 'Keep-Alive';
             $guzzle = new GuzzleClient([
                 'headers' => $headers,
