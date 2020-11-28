@@ -357,6 +357,10 @@ class Client
                 $contents,
                 true
             );
+        } else if ($contents = $response->getHeaders()) {
+            // Looks like when response body is empty the result might be in the headers.
+            // Good job LinkedIn.
+            $result = $contents;
         }
 
         return $result;
