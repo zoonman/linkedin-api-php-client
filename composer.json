@@ -1,6 +1,6 @@
 {
     "name": "samoritano/linkedin-api-php-client",
-    "description": "LinkedIn V2 Marketing API PHP SDK with OAuth 2.0 & CSRF support. Can be used for social sign in or sharing on LinkedIn",
+    "description": "This package is an SDK for using LinkedIn V2 Marketing API. You can use it for managing Company Pages in this social network",
     "type": "library",
     "keywords": [
         "linkedin", "linkedin-client", "linkedin-api", "linkedin-signin",
@@ -13,12 +13,12 @@
     "require": {
         "php": ">=7.3",
         "ext-curl": "*",
-        "guzzlehttp/guzzle": "^6.3"
+        "guzzlehttp/guzzle": "^7.2"
     },
     "license": "MIT",
     "authors": [
         {
-            "name": "Samori Bokoko",
+            "name": "Samori Bokokó",
             "email": "samori@bokokode.com",
             "homepage": "https://bokokode.com/",
             "role": "Developer"
