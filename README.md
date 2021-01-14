@@ -1,10 +1,6 @@
 LinkedIn API Client with OAuth 2 authorization written on PHP
 ============================================================
-[![Build Status](https://travis-ci.org/samoritano/linkedin-api-php-client.svg?branch=master)](https://travis-ci.org/samoritano/linkedin-api-php-client) [![Code Climate](https://codeclimate.com/github/samoritano/linkedin-api-php-client/badges/gpa.svg)](https://codeclimate.com/github/samoritano/linkedin-api-php-client) [![Packagist](https://img.shields.io/packagist/dt/samoritano/linkedin-api-php-client.svg)](https://packagist.org/packages/samoritano/linkedin-api-php-client) [![GitHub license](https://img.shields.io/github/license/samoritano/linkedin-api-php-client.svg)](https://github.com/samoritano/linkedin-api-php-client/blob/master/LICENSE.md)
-
-
-
-See [complete example](examples/) inside [index.php](examples/index.php) to get started. --> OBSOLETE (This part needs an update)
+[![Build Status](https://travis-ci.org/samoritano/linkedin-api-php-client.svg?branch=master)](https://travis-ci.org/samoritano/linkedin-api-php-client) [![Code Climate](https://codeclimate.com/github/samoritano/linkedin-api-php-client/badges/gpa.svg)](https://codeclimate.com/github/samoritano/linkedin-api-php-client) [![Packagist](https://img.shields.io/packagist/dt/samoritano/linkedin-api-php-client.svg)](https://packagist.org/packages/samoritano/linkedin-api-php-client-v2) [![GitHub license](https://img.shields.io/github/license/samoritano/linkedin-api-php-client.svg)](https://github.com/samoritano/linkedin-api-php-client/blob/master/LICENSE.md)
 
 
 ## Installation
@@ -19,21 +15,18 @@ composer require samoritano/linkedin-api-php-client-v2
 
 Or add this package as dependency to `composer.json`.
 
-If you have never used Composer, you should start [here](http://www.phptherightway.com/#composer_and_packagist)
-and install composer.
 
 
 ## Get Started
 
-Before you will get started, play visit to [LinkedIn API Documentation](https://docs.microsoft.com/en-us/linkedin/).
+Before you will get started, play visit to [LinkedIn API Documentation](https://docs.microsoft.com/en-us/linkedin/marketing/getting-started).
 This will save you a lot of time and prevent some silly questions.
 
 To start working with LinkedIn API, you will need to 
 get application client id and secret. 
 
 Go to [LinkedIn Developers portal](https://www.linkedin.com/developers/) 
-and create new application in section My Apps. 
-Save ClientId and ClientSecret, you will use them later.
+and create new application in section My Apps. Once your app has been approved, you will get a ClientId and ClientSecret, that you will use later.
 
 
 #### Bootstrapping autoloader and instantiating a client
@@ -78,6 +71,9 @@ $client->setRedirectUrl('http://your.domain.tld/path/to/script/');
 
 In order of performing OAUTH 2.0 flow, you should get LinkedIn login URL.
 During this procedure you have to define scope of requested permissions.
+
+You can read more about Linkedin Api scopes [here](https://docs.microsoft.com/en-us/linkedin/shared/references/migrations/default-scopes-migration).
+
 Use `Scope` enum class to get scope names.
 To get redirect url to LinkedIn, use the following approach:
 
@@ -183,43 +179,7 @@ $profile = $client->get(
 print_r($profile);
 ```
 
-##### Share content on a personal profile --> OBSOLETE (This part needs an update)
 
-Make sure that image URL is available from the Internet (don't use localhost in the image url).
-
-```php
-$share = $client->post(                 
-                'ugcPosts',                         
-                [                                   
-                    'author' => 'urn:li:person:' . $profile['id'],
-                    'lifecycleState' => 'PUBLISHED',
-                    'specificContent' => [          
-                        'com.linkedin.ugc.ShareContent' => [
-                            'shareCommentary' => [
-                                'text' => 'Checkout this amazing PHP SDK for LinkedIn!'
-                            ],
-                            'shareMediaCategory' => 'ARTICLE',
-                            'media' => [
-                                [
-                                    'status' => 'READY',
-                                    'description' => [
-                                        'text' => 'OAuth 2 flow, composer Package.'
-                                    ],
-                                    'originalUrl' => 'https://github.com/samoritano/linkedin-api-php-client',
-                                    'title' => [
-                                        'text' => 'PHP Client for LinkedIn API'
-                                    ]
-                                ]
-                            ]
-                        ]
-                    ],
-                    'visibility' => [
-                        'com.linkedin.ugc.MemberNetworkVisibility' => 'CONNECTIONS'
-                    ]
-                ]
-            );
-print_r($share);
-```
 
 ##### Get Company page profile
 
@@ -229,46 +189,7 @@ $companyInfo = $client->get('organizations/' . $companyId);
 print_r($companyInfo);
 ```
 
-##### Share content on a LinkedIn business page --> OBSOLETE (This part needs an update)
 
-```php
-// set sandboxed company page to work with
-// you can check updates at
-// https://www.linkedin.com/company/devtestco
-$companyId = '2414183';
-
-$share = $client->post(                 
-                'ugcPosts',                         
-                [                                   
-                    'author' => 'urn:li:organization:' . $companyId,
-                    'lifecycleState' => 'PUBLISHED',
-                    'specificContent' => [          
-                        'com.linkedin.ugc.ShareContent' => [
-                            'shareCommentary' => [
-                                'text' => 'Checkout this amazing PHP SDK for LinkedIn!'
-                            ],
-                            'shareMediaCategory' => 'ARTICLE',
-                            'media' => [
-                                [
-                                    'status' => 'READY',
-                                    'description' => [
-                                        'text' => 'OAuth 2 flow, composer Package.'
-                                    ],
-                                    'originalUrl' => 'https://github.com/samoritano/linkedin-api-php-client',
-                                    'title' => [
-                                        'text' => 'PHP Client for LinkedIn API'
-                                    ]
-                                ]
-                            ]
-                        ]
-                    ],
-                    'visibility' => [
-                        'com.linkedin.ugc.MemberNetworkVisibility' => 'PUBLIC'
-                    ]
-                ]
-            );
-print_r($share);
-```
 
 ##### Setup custom API request headers
 
