@@ -515,15 +515,15 @@ class Client
 
     /**
      * Perform API call to LinkedIn
-     *
-     * @param string $endpoint
-     * @param array  $params
+     * @param $endpoint
+     * @param array $params
      * @param string $method
-     *
+     * @param bool $rawData
      * @return array
-     * @throws \LinkedIn\Exception
+     * @throws Exception
+     * @throws \GuzzleHttp\Exception\GuzzleException
      */
-    public function api($endpoint, array $params = [], $method = Method::GET)
+    public function api($endpoint, array $params = [], $method = Method::GET, bool $rawData = false)
     {
         $headers = $this->getApiHeaders();
         $options = $this->prepareOptions($params, $method);
@@ -540,6 +540,20 @@ class Client
         if (!empty($params) && Method::GET === $method) {
             $endpoint .= '?' . build_query($params);
         }
+
+        if ($rawData) {
+            try {
+                $response = $guzzle->request("POST", $endpoint, [
+                    "headers" => $headers,
+                    "body" => $params[0]
+                ]);
+            } catch (GuzzleException $e) {
+                throw Exception::fromRequestException($e);
+            }
+            return self::responseToArray($response);
+        }
+
+
         try {
             $response = $guzzle->request($method, $endpoint, $options);
         } catch (RequestException $requestException) {
@@ -563,17 +577,15 @@ class Client
     }
 
     /**
-     * Make API call to LinkedIn using POST method
-     *
-     * @param string $endpoint
-     * @param array  $params
-     *
+     * @param $endpoint
+     * @param array $params
+     * @param bool $rawData
      * @return array
-     * @throws \LinkedIn\Exception
+     * @throws Exception
      */
-    public function post($endpoint, array $params = [])
+    public function post($endpoint, array $params = [], bool $rawData = false)
     {
-        return $this->api($endpoint, $params, Method::POST);
+        return $this->api($endpoint, $params, Method::POST, $rawData);
     }
 
     /**
