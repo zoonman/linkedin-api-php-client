@@ -348,19 +348,30 @@ class Client
      * @param \Psr\Http\Message\ResponseInterface $response
      *
      * @return array
+     * @throws \LinkedIn\Exception
      */
     public static function responseToArray($response)
     {
         $result = [];
-        if ($contents = $response->getBody()->getContents()) {
-            $result = \GuzzleHttp\json_decode(
-                $contents,
-                true
+        try {
+            if ($contents = $response->getBody()->getContents()) {
+                $result = \GuzzleHttp\json_decode(
+                    $contents,
+                    true
+                );
+            } else if ($contents = $response->getHeaders()) {
+                // Looks like when response body is empty the result might be in the headers.
+                // Good job LinkedIn.
+                $result = $contents;
+            }
+        } catch (\Exception $exception) {
+            throw new Exception(
+                'Malformed response contents.',
+                0,
+                $exception,
+                $exception->getMessage(),
+                $contents
             );
-        } else if ($contents = $response->getHeaders()) {
-            // Looks like when response body is empty the result might be in the headers.
-            // Good job LinkedIn.
-            $result = $contents;
         }
 
         return $result;
