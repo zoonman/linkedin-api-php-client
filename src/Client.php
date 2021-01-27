@@ -19,6 +19,7 @@ namespace LinkedIn;
 
 use GuzzleHttp\Client as GuzzleClient;
 use GuzzleHttp\Exception\RequestException;
+use GuzzleHttp\Psr7\Query;
 use function GuzzleHttp\Psr7\build_query;
 use GuzzleHttp\Psr7\Uri;
 use LinkedIn\Http\Method;
@@ -515,18 +516,17 @@ class Client
 
     /**
      * Perform API call to LinkedIn
-     * @param $endpoint
-     * @param array $params
+     *
+     * @param string $endpoint
+     * @param array  $params
      * @param string $method
-     * @param bool $rawData
+     *
      * @return array
-     * @throws Exception
-     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \LinkedIn\Exception
      */
-    public function api($endpoint, array $params = [], $method = Method::GET, bool $rawData = false)
+    public function api($endpoint, array $params = [], $method = Method::GET)
     {
         $headers = $this->getApiHeaders();
-        $options = $this->prepareOptions($params, $method);
         Method::isMethodSupported($method);
         if ($this->isUsingTokenParam()) {
             $params['oauth2_access_token'] = $this->accessToken->getToken();
@@ -541,21 +541,8 @@ class Client
             $endpoint .= '?' . build_query($params);
         }
 
-        if ($rawData) {
-            try {
-                $response = $guzzle->request("POST", $endpoint, [
-                    "headers" => $headers,
-                    "body" => $params[0]
-                ]);
-            } catch (GuzzleException $e) {
-                throw Exception::fromRequestException($e);
-            }
-            return self::responseToArray($response);
-        }
-
-
         try {
-            $response = $guzzle->request($method, $endpoint, $options);
+            $response = $guzzle->request($method, $endpoint, $params);
         } catch (RequestException $requestException) {
             throw Exception::fromRequestException($requestException);
         }
@@ -585,7 +572,8 @@ class Client
      */
     public function post($endpoint, array $params = [], bool $rawData = false)
     {
-        return $this->api($endpoint, $params, Method::POST, $rawData);
+        $params = $this->prepareOptions($params, $rawData);
+        return $this->api($endpoint, $params, Method::POST);
     }
 
     /**
@@ -645,15 +633,17 @@ class Client
 
     /**
      * @param array $params
-     * @param string $method
-     * @return mixed
+     * @param bool $rawData
+     * @return array
      */
-    protected function prepareOptions(array $params, $method)
+    protected function prepareOptions(array $params, bool $rawData = false)
     {
         $options = [];
-        if ($method === Method::POST) {
-            $options['body'] = \GuzzleHttp\json_encode($params);
+        if ($rawData) {
+            $options['body'] = Query::build($params, false);
+            return $options;
         }
+        $options['body'] = \GuzzleHttp\json_encode($params);
         return $options;
     }
 }
