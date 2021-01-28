@@ -13,7 +13,7 @@
     "require": {
         "php": ">=7.3",
         "ext-curl": "*",
-        "guzzlehttp/guzzle": "^7.2"
+        "guzzlehttp/guzzle": "^6.3"
     },
     "license": "MIT",
     "authors": [
