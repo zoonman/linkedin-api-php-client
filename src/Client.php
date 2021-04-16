@@ -608,7 +608,7 @@ class Client
     protected function prepareOptions(array $params, $method)
     {
         $options = [];
-        if ($method === Method::POST) {
+        if ($method === Method::POST || $method === Method::PUT) {
             $options['body'] = \GuzzleHttp\json_encode($params);
         }
         return $options;
