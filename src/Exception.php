@@ -66,7 +66,7 @@ class Exception extends \Exception
     public static function fromRequestException($exception)
     {
         return new static(
-            $exception->getMessage(),
+            $exception->getResponse()->getBody(),
             $exception->getCode(),
             $exception,
             static::extractErrorDescription($exception)
