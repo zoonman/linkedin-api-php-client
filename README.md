@@ -14,7 +14,7 @@ You will need at least PHP 7.3. We match [officially supported](https://www.php.
 Use [composer](https://getcomposer.org/) package manager to install the lastest version of the package:
 
 ```bash
-composer require zoonman/linkedin-api-php-client
+composer require omitech/linkedin-api-php-client
 ```
 
 Or add this package as dependency to `composer.json`.
@@ -130,10 +130,31 @@ $client = new Client(
 $tokenString = file_get_contents('token.json');
 $tokenData = json_decode($tokenString, true);
 // instantiate access token object from stored data
-$accessToken = new AccessToken($tokenData['token'], $tokenData['expiresAt']);
+$accessToken = new AccessToken($tokenData['token'], $tokenData['expiresAt'], $tokenData['refreshToken'], $tokenData['refreshTokenExpiresAt']);
 
 // set token for client
-$client->setAccessToken($accessToken);
+if (!$accessToken->isExpired()) {
+    $client->setAccessToken($accessToken);
+} elseif (!$accessToken->isRefreshTokenExpired()) {
+    $accessToken = $client->refreshAccessToken($accessToken);
+
+    file_put_contents(__DIR__ . '/token.json', json_encode($accessToken));
+} else {
+    echo "try to login again\n";
+    $client->setRedirectUrl('https://sciencex.com/Newsman3/extra/oauth/');
+
+    $scopes = [
+        Scope::READ_LITE_PROFILE,
+        Scope::READ_EMAIL_ADDRESS,
+        Scope::SHARE_AS_USER,
+        Scope::SHARE_AS_ORGANIZATION,
+    ];
+
+    $loginUrl = $client->getLoginUrl($scopes);
+
+    echo $loginUrl;
+    die();
+}
 ```
 
 #### Performing API calls 
