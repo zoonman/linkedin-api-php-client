@@ -1,6 +1,6 @@
 LinkedIn API Client with OAuth 2 authorization written on PHP
 ============================================================
-[![Build Status](https://travis-ci.org/samoritano/linkedin-api-php-client.svg?branch=master)](https://travis-ci.org/samoritano/linkedin-api-php-client) [![Code Climate](https://codeclimate.com/github/samoritano/linkedin-api-php-client/badges/gpa.svg)](https://codeclimate.com/github/samoritano/linkedin-api-php-client) [![Packagist](https://img.shields.io/packagist/dt/samoritano/linkedin-api-php-client.svg)](https://packagist.org/packages/samoritano/linkedin-api-php-client-v2) [![GitHub license](https://img.shields.io/github/license/samoritano/linkedin-api-php-client.svg)](https://github.com/samoritano/linkedin-api-php-client/blob/master/LICENSE.md)
+[![Build Status](https://travis-ci.org/AgencyPMG/linkedin-api-php-client.svg?branch=master)](https://travis-ci.org/AgencyPMG/linkedin-api-php-client) [![Code Climate](https://codeclimate.com/github/AgencyPMG/linkedin-api-php-client/badges/gpa.svg)](https://codeclimate.com/github/AgencyPMG/linkedin-api-php-client) [![Packagist](https://img.shields.io/packagist/dt/AgencyPMG/linkedin-api-php-client.svg)](https://packagist.org/packages/AgencyPMG/linkedin-api-php-client-v2) [![GitHub license](https://img.shields.io/github/license/AgencyPMG/linkedin-api-php-client.svg)](https://github.com/AgencyPMG/linkedin-api-php-client/blob/master/LICENSE.md)
 
 
 ## Installation
@@ -10,7 +10,7 @@ You will need at least PHP 7.3. We match [officially supported](https://www.php.
 Use [composer](https://getcomposer.org/) package manager to install the lastest version of the package:
 
 ```bash
-composer require samoritano/linkedin-api-php-client-v2
+composer require AgencyPMG/linkedin-api-php-client-v2
 ```
 
 Or add this package as dependency to `composer.json`.
@@ -22,10 +22,10 @@ Or add this package as dependency to `composer.json`.
 Before you will get started, play visit to [LinkedIn API Documentation](https://docs.microsoft.com/en-us/linkedin/marketing/getting-started).
 This will save you a lot of time and prevent some silly questions.
 
-To start working with LinkedIn API, you will need to 
-get application client id and secret. 
+To start working with LinkedIn API, you will need to
+get application client id and secret.
 
-Go to [LinkedIn Developers portal](https://www.linkedin.com/developers/) 
+Go to [LinkedIn Developers portal](https://www.linkedin.com/developers/)
 and create new application in section My Apps. Once your app has been approved, you will get a ClientId and ClientSecret, that you will use later.
 
 
@@ -48,7 +48,7 @@ $client = new Client(
 
 #### Getting local redirect URL
 
-To start linking process you have to setup redirect url. 
+To start linking process you have to setup redirect url.
 You can set your own or use current one.
 SDK provides you a `getRedirectUrl()` helper for your convenience:
 
@@ -56,10 +56,10 @@ SDK provides you a `getRedirectUrl()` helper for your convenience:
 $redirectUrl = $client->getRedirectUrl();
 ```
 
-We recommend you to have it stored during the linking session 
+We recommend you to have it stored during the linking session
 because you will need to use it when you will be getting access token.
 
-#### Setting local redirect URL 
+#### Setting local redirect URL
 
 Set a custom redirect url use:
 
@@ -67,7 +67,7 @@ Set a custom redirect url use:
 $client->setRedirectUrl('http://your.domain.tld/path/to/script/');
 ```
 
-#### Getting LinkedIn redirect URL 
+#### Getting LinkedIn redirect URL
 
 In order of performing OAUTH 2.0 flow, you should get LinkedIn login URL.
 During this procedure you have to define scope of requested permissions.
@@ -82,7 +82,7 @@ use LinkedIn\Scope;
 
 // define scope
 $scopes = [
-  Scope::READ_LITE_PROFILE, 
+  Scope::READ_LITE_PROFILE,
   Scope::READ_EMAIL_ADDRESS,
   Scope::SHARE_AS_USER,
   Scope::SHARE_AS_ORGANIZATION,
@@ -92,20 +92,20 @@ $loginUrl = $client->getLoginUrl($scopes); // get url on LinkedIn to start linki
 
 Now you can take user to LinkedIn. You can use link or rely on Location HTTP header.
 
-#### Getting Access Token 
+#### Getting Access Token
 
 To get access token use (don't forget to set redirect url)
 
 ```php
 $accessToken = $client->getAccessToken($_GET['code']);
 ```
-This method returns object of `LinkedIn\AccessToken` class. 
+This method returns object of `LinkedIn\AccessToken` class.
 You can store this token in the file like this:
 ```php
 file_put_contents('token.json', json_encode($accessToken));
 ```
-This way of storing tokens is not recommended due to security concerns and used for demonstration purpose. 
-Please, ensure that tokens are stored securely. 
+This way of storing tokens is not recommended due to security concerns and used for demonstration purpose.
+Please, ensure that tokens are stored securely.
 
 #### Setting Access Token
 
@@ -118,7 +118,7 @@ use LinkedIn\Client;
 
 // instantiate the Linkedin client
 $client = new Client(
-    'LINKEDIN_APP_CLIENT_ID',  
+    'LINKEDIN_APP_CLIENT_ID',
     'LINKEDIN_APP_CLIENT_SECRET'
 );
 
@@ -132,7 +132,7 @@ $accessToken = new AccessToken($tokenData['token'], $tokenData['expiresAt']);
 $client->setAccessToken($accessToken);
 ```
 
-#### Performing API calls 
+#### Performing API calls
 
 All API calls can be called through simple method:
 
@@ -217,7 +217,7 @@ $client->setApiRoot('https://api.linkedin.com/v2/');
 I assume you have to be LinkedIn partner or something like that.
 
 Try to upload image to LinkedIn. See [Rich Media Shares](https://docs.microsoft.com/en-us/linkedin/marketing/integrations/community-management/shares/rich-media-shares)
- 
+
 
 ```php
 $filename = '/path/to/image.jpg';
@@ -228,7 +228,7 @@ $mp = $client->upload($filename);
 ## Contributing
 
 Please, open PR with your changes linked to an GitHub issue.
-You code must follow [PSR](http://www.php-fig.org/psr/) standards and have PHPUnit tests. 
+You code must follow [PSR](http://www.php-fig.org/psr/) standards and have PHPUnit tests.
 
 ## License
 
