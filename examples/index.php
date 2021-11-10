@@ -3,7 +3,7 @@
  * linkedin-client
  * index.php
  *
- * PHP Version 5
+ * PHP Version 7
  *
  * @category Production
  * @package  Default
@@ -18,8 +18,8 @@
 include_once dirname(__DIR__) . DIRECTORY_SEPARATOR . 'vendor/autoload.php';
 
 // import client class
-use LinkedIn\Client;
-use LinkedIn\Scope;
+use TSparksh\LinkedIn\Client;
+use TSparksh\LinkedIn\Scope;
 
 // import environment variables from the environment file
 // you need a .env file in the parent folder

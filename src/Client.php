@@ -3,7 +3,7 @@
  * linkedin-client
  * Client.php
  *
- * PHP Version 5
+ * PHP Version 7
  *
  * @category Production
  * @package  Default
@@ -15,13 +15,13 @@
  * @link     http://www.zoonman.com/projects/linkedin-client/
  */
 
-namespace LinkedIn;
+namespace TSparksh\LinkedIn;
 
 use GuzzleHttp\Client as GuzzleClient;
 use GuzzleHttp\Exception\RequestException;
 use function GuzzleHttp\Psr7\build_query;
 use GuzzleHttp\Psr7\Uri;
-use LinkedIn\Http\Method;
+use TSparksh\LinkedIn\Http\Method;
 
 /**
  * Class Client

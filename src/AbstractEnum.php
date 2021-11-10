@@ -3,7 +3,7 @@
  * linkedin-client
  * AbstractEnum.php
  *
- * PHP Version 5
+ * PHP Version 7
  *
  * @category Production
  * @package  Default
@@ -14,7 +14,7 @@
  * @link     http://www.zoonman.com/projects/linkedin-client/
  */
 
-namespace LinkedIn;
+namespace TSparksh\LinkedIn;
 
 /**
  * Class AbstractEnum

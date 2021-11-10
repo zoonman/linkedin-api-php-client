@@ -3,7 +3,7 @@
  * linkedin-client
  * Method.php
  *
- * PHP Version 5
+ * PHP Version 7
  *
  * @category Production
  * @package  Default
@@ -14,9 +14,9 @@
  * @link     http://www.zoonman.com/projects/linkedin-client/
  */
 
-namespace LinkedIn\Http;
+namespace TSparksh\LinkedIn\Http;
 
-use LinkedIn\AbstractEnum;
+use TSparksh\LinkedIn\AbstractEnum;
 
 class Method extends AbstractEnum
 {

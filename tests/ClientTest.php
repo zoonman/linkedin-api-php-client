@@ -3,7 +3,7 @@
  * linkedin-client
  * ClientTest.php
  *
- * PHP Version 5
+ * PHP Version 7
  *
  * @category Production
  * @package  Default
@@ -14,7 +14,7 @@
  * @link     http://www.zoonman.com/projects/linkedin-client/
  */
 
-namespace LinkedIn;
+namespace TSparksh\LinkedIn;
 
 /**
  * Class ClientTest
@@ -25,7 +25,7 @@ class ClientTest extends \PHPUnit_Framework_TestCase
 {
 
     /**
-     * @var \LinkedIn\Client
+     * @var \TSparksh\LinkedIn\Client
      */
     public $client;
 
@@ -50,7 +50,7 @@ class ClientTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Make sure that method LinkedIn\Client::setAccessToken() works correctly
+     * Make sure that method TSparksh\LinkedIn\Client::setAccessToken() works correctly
      *
      * @param $token
      * @param AccessToken|null $expectedToken
@@ -79,7 +79,7 @@ class ClientTest extends \PHPUnit_Framework_TestCase
             [
                 'token' => null,
                 'expectedToken' => null,
-                'expectedException' => new \InvalidArgumentException('$accessToken must be instance of \LinkedIn\AccessToken class'),
+                'expectedException' => new \InvalidArgumentException('$accessToken must be instance of \TSparksh\LinkedIn\AccessToken class'),
             ],
 
             [
@@ -97,7 +97,7 @@ class ClientTest extends \PHPUnit_Framework_TestCase
             [
                 'token' => new \StdClass(),
                 'expectedToken' => null,
-                'expectedException' => new \InvalidArgumentException('$accessToken must be instance of \LinkedIn\AccessToken class'),
+                'expectedException' => new \InvalidArgumentException('$accessToken must be instance of \TSparksh\LinkedIn\AccessToken class'),
             ],
         ];
     }

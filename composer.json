@@ -42,7 +42,7 @@
         "wiki": "https://github.com/zoonman/linkedin-api-php-client/wiki"
     },
     "autoload": {
-        "psr-4": {"LinkedIn\\": "src/"}
+        "psr-4": {"TSparksh\\LinkedIn\\": "src"}
     },
     "require-dev": {
         "vlucas/phpdotenv": "~2.0",
