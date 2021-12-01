@@ -211,25 +211,3 @@ Some private API access there.
 ```php
 $client->setApiRoot('https://api.linkedin.com/v2/');
 ```
-
-##### ~Image Upload~ --> OBSOLETE (This part needs an update)
-
-I assume you have to be LinkedIn partner or something like that.
-
-Try to upload image to LinkedIn. See [Rich Media Shares](https://docs.microsoft.com/en-us/linkedin/marketing/integrations/community-management/shares/rich-media-shares)
-
-
-```php
-$filename = '/path/to/image.jpg';
-$client->setApiRoot('https://api.linkedin.com/');
-$mp = $client->upload($filename);
-```
-
-## Contributing
-
-Please, open PR with your changes linked to an GitHub issue.
-You code must follow [PSR](http://www.php-fig.org/psr/) standards and have PHPUnit tests.
-
-## License
-
-[MIT](LICENSE.md)
