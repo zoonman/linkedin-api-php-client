@@ -11,9 +11,9 @@
     ],
     "homepage": "https://github.com/AgencyPMG/linkedin-api-php-client",
     "require": {
-        "php": ">=7.3",
+        "php": "^7.4 || ^8.0",
         "ext-curl": "*",
-        "guzzlehttp/guzzle": "^6.3"
+        "guzzlehttp/guzzle": "^7.3.0"
     },
     "license": "MIT",
     "support": {
