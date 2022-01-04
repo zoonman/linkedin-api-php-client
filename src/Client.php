@@ -37,6 +37,11 @@ class Client
     const OAUTH2_GRANT_TYPE = 'authorization_code';
 
     /**
+     * Grant type
+     */
+    const REFRESH_TOKEN_GRANT_TYPE = 'refresh_token';
+
+    /**
      * Response type
      */
     const OAUTH2_RESPONSE_TYPE = 'code';
@@ -292,10 +297,45 @@ class Client
             } catch (RequestException $exception) {
                 throw Exception::fromRequestException($exception);
             }
+
             $this->setAccessToken(
                 AccessToken::fromResponse($response)
             );
         }
+        return $this->accessToken;
+    }
+
+    /**
+     *
+     * @param AccessToken $token
+     * @return AccessToken
+     */
+    public function refreshAccessToken(AccessToken $token)
+    {
+        $uri = $this->buildUrl('accessToken', []);
+        $guzzle = new GuzzleClient([
+            'headers' => [
+                'Content-Type' => 'application/json',
+                'x-li-format' => 'json',
+                'Connection' => 'Keep-Alive'
+            ]
+        ]);
+
+        try {
+            $response = $guzzle->post($uri, ['form_params' => [
+                'grant_type' => self::REFRESH_TOKEN_GRANT_TYPE,
+                'refresh_token' => $token->getRefreshToken(),
+                'client_id' => $this->getClientId(),
+                'client_secret' => $this->getClientSecret(),
+            ]]);
+        } catch (RequestException $exception) {
+            throw Exception::fromRequestException($exception);
+        }
+
+        $this->setAccessToken(
+            AccessToken::fromResponse($response)
+        );
+
         return $this->accessToken;
     }
 
