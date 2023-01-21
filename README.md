@@ -10,7 +10,7 @@ You will need at least PHP 7.3. We match [officially supported](https://www.php.
 Use [composer](https://getcomposer.org/) package manager to install the lastest version of the package:
 
 ```bash
-composer require pmg/linkedin-api-php-client
+composer require samoritano/linkedin-api-php-client-v2
 ```
 
 Or add this package as dependency to `composer.json`.
