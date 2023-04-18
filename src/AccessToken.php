@@ -203,7 +203,7 @@ class AccessToken implements \JsonSerializable
             $responseArray['access_token'],
             $responseArray['expires_in'] + time(),
             $responseArray['refresh_token'],
-            $responseArray['refresh_token_expires_in']
+            $responseArray['refresh_token_expires_in'] + time()
         );
     }
     private static function validateAccessToken($responseArray)
