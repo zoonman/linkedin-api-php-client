@@ -202,8 +202,8 @@ class AccessToken implements \JsonSerializable
         return new static(
             $responseArray['access_token'],
             $responseArray['expires_in'] + time(),
-            ((isset($responseArray['refresh_token'])) ? ($responseArray['refresh_token']) : ('')),
-            ((isset($responseArray['refresh_token_expires_in'])) ? ($responseArray['refresh_token_expires_in'] + time()) : (''))
+            $responseArray['refresh_token'],
+            $responseArray['refresh_token_expires_in']
         );
     }
     private static function validateAccessToken($responseArray)
@@ -225,17 +225,17 @@ class AccessToken implements \JsonSerializable
     private static function validateRefreshToken($responseArray)
     {
         if (!isset($responseArray['refresh_token'])) {
-           // throw new \InvalidArgumentException(
-           //    'Refresh token is not available'
-           // );
+           throw new \InvalidArgumentException(
+               'Refresh token is not available'
+           );
         }
     }
     private static function validateRefreshTokenExpiresIn($responseArray)
     {
         if (!isset($responseArray['refresh_token_expires_in'])) {
-            //throw new \InvalidArgumentException(
-            //    'Refresh token expiration date is not specified'
-            //);
+            throw new \InvalidArgumentException(
+               'Refresh token expiration date is not specified'
+            );
         }
     }
     /**
