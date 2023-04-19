@@ -1,7 +1,5 @@
 LinkedIn API Client with OAuth 2 authorization written on PHP
 ============================================================
-[![Build Status](https://travis-ci.org/AgencyPMG/linkedin-api-php-client.svg?branch=master)](https://travis-ci.org/AgencyPMG/linkedin-api-php-client) [![Code Climate](https://codeclimate.com/github/AgencyPMG/linkedin-api-php-client/badges/gpa.svg)](https://codeclimate.com/github/AgencyPMG/linkedin-api-php-client) [![Packagist](https://img.shields.io/packagist/dt/AgencyPMG/linkedin-api-php-client.svg)](https://packagist.org/packages/AgencyPMG/linkedin-api-php-client-v2) [![GitHub license](https://img.shields.io/github/license/AgencyPMG/linkedin-api-php-client.svg)](https://github.com/AgencyPMG/linkedin-api-php-client/blob/master/LICENSE.md)
-
 
 ## Installation
 
