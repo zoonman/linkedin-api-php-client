@@ -1,6 +1,6 @@
 {
-    "name": "zoonman/linkedin-api-php-client",
-    "description": "LinkedIn API PHP SDK with OAuth 2.0 & CSRF support. Can be used for social sign in or sharing on LinkedIn. Examples. Documentation.",
+    "name": "samoritano/linkedin-api-php-client",
+    "description": "This package is an SDK for using LinkedIn V2 Marketing API. You can use it for managing Company Pages in this social network",
     "type": "library",
     "keywords": [
         "linkedin", "linkedin-client", "linkedin-api", "linkedin-signin",
@@ -9,37 +9,17 @@
         "social", "rest", "api", "client", "social network", "auth", "authorization",
         "wrapper", "integration", "platform"
     ],
-    "homepage": "https://github.com/zoonman/linkedin-api-php-client",
+    "homepage": "https://github.com/samoritano/linkedin-api-php-client",
     "require": {
-        "php": ">=5.6",
+        "php": "^7.4 || ^8.0",
         "ext-curl": "*",
-        "guzzlehttp/guzzle": "^6.3"
+        "guzzlehttp/guzzle": "^7.3.0"
     },
     "license": "MIT",
-    "authors": [
-        {
-            "name": "Philipp Tkachev",
-            "email": "philipp@zoonman.com",
-            "homepage": "http://www.zoonman.com/",
-            "role": "Developer"
-        },
-        {
-            "name": "Aleksey Salnikov",
-            "email": "me@iamsalnikov.ru",
-            "homepage": "http://iamsalnikov.ru/",
-            "role": "Developer"
-        },
-        {
-            "name": "Daniel J. Post",
-            "homepage": "http://danieljpost.info/",
-            "role": "Developer"
-        }
-    ],
     "support": {
-        "docs": "https://www.zoonman.com/projects/linkedin-client/",
-        "source": "https://github.com/zoonman/linkedin-api-php-client",
-        "issues": "https://github.com/zoonman/linkedin-api-php-client/issues",
-        "wiki": "https://github.com/zoonman/linkedin-api-php-client/wiki"
+        "docs": "https://github.com/samoritano/linkedin-api-php-client/blob/master/README.md",
+        "source": "https://github.com/samoritano/linkedin-api-php-client",
+        "issues": "https://github.com/samoritano/linkedin-api-php-client/issues"
     },
     "autoload": {
         "psr-4": {"LinkedIn\\": "src/"}
@@ -52,10 +32,8 @@
     },
     "archive": {
         "exclude": [
-            "examples",
             "tests",
             ".env",
-            ".travis.yml",
             "phpunit.xml"
         ]
     },
