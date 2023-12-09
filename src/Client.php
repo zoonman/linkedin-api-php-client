@@ -647,7 +647,7 @@ class Client
     {
         $options = [];
         if ($rawData) {
-            $options['body'] = build_query($params, false);
+            $options['body'] = Query::build($params, false);
             return $options;
         }
         $options['body'] = \GuzzleHttp\json_encode($params);
