@@ -3,12 +3,12 @@ LinkedIn API Client with OAuth 2 authorization written on PHP
 
 ## Installation
 
-You will need at least PHP 7.3. We match [officially supported](https://www.php.net/supported-versions.php) versions of PHP.
+You will need at least PHP 7.4. We match [officially supported](https://www.php.net/supported-versions.php) versions of PHP.
 
 Use [composer](https://getcomposer.org/) package manager to install the lastest version of the package:
 
 ```bash
-composer require esensdesign/linkedin-api-php-client
+composer require samoritano/linkedin-api-php-client
 ```
 
 Or add this package as dependency to `composer.json`.
